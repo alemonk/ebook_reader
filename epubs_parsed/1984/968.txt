@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘You know this, Winston,’ said O’Brien. ‘Don’t deceive yourself. You did know it—you have always known it.’

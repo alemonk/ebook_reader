@@ -1,0 +1,6 @@
+Class: Paragraph---Blockquote
+
+’Oranges and lemons, say the bells of St Clement’s, 
+You owe me three farthings, say the bells of St Martin’s, 
+When will you pay me? say the bells of Old Bailey, 
+When I grow rich, say the bells of Shoreditch.’

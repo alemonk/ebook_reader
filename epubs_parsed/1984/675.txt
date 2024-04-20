@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+He told Julia the story of his mother’s disappearance. Without opening her eyes she rolled over and settled herself into a more comfortable position.

@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘You have thought sometimes,’ said O’Brien, ‘that my face—the face of a member of the Inner Party—looks old and worn. What do you think of your own face?’

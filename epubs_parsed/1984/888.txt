@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘Smith!’ yelled a voice from the telescreen. ‘6079 Smith W.! Hands out of pockets in the cells!’

@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘I expect I’m better at finding things out than you are, dear. Tell me, what did you think of me before that day I gave you the note?’

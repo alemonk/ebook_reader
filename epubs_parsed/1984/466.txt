@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘Yes, something of that kind. A great many young girls are like that, you know.’

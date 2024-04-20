@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘The rat,’ said O’Brien, still addressing his invisible audience, ‘although a rodent, is carnivorous. You are aware of that. You will have heard of the things that happen in the poor quarters of this town. In some streets a woman dare not leave her baby alone in the house, even for five minutes. The rats are certain to attack it. Within quite a small time they will strip it to the bones. They also attack sick or dying people. They show astonishing intelligence in knowing when a human being is helpless.’

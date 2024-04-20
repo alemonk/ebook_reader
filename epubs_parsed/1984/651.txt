@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘The tenth edition is not due to appear for some months, I believe. But a few advance copies have been circulated. I have one myself. It might interest you to look at it, perhaps?’

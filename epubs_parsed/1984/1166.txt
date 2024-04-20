@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘It is impossible to found a civilization on fear and hatred and cruelty. It would never endure.’

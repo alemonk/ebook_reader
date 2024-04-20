@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘Martin is one of us,’ said O’Brien impassively. ‘Bring the drinks over here, Martin. Put them on the round table. Have we enough chairs? Then we may as well sit down and talk in comfort. Bring a chair for yourself, Martin. This is business. You can stop being a servant for the next ten minutes.’

@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘Perhaps I have not made myself clear,’ he said. ‘What I’m trying to say is this. You have been alive a very long time; you lived half your life before the Revolution. In 1925, for instance, you were already grown up. Would you say from what you can remember, that life in 1925 was better than it is now, or worse? If you could choose, would you prefer to live then or now?’

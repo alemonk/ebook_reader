@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘As a rule, yes.’

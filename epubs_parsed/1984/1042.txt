@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘No, Winston, that is no use. You are lying. You still think there are four. How many fingers, please?’

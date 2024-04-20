@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘It isn’t very important about the top hats,’ said Winston patiently. ‘The point is, these capitalists—they and a few lawyers and priests and so forth who lived on them—were the lords of the earth. Everything existed for their benefit. You—the ordinary people, the workers—were their slaves. They could do what they liked with you. They could ship you off to Canada like cattle. They could sleep with your daughters if they chose. They could order you to be flogged with something called a cat-o’-nine tails. You had to take your cap off when you passed them. Every capitalist went about with a gang of lackeys who——’

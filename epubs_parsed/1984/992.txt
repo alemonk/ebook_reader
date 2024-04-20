@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+‘I am taking trouble with you, Winston,’ he said, ‘because you are worth trouble. You know perfectly well what is the matter with you. You have known it for years, though you have fought against the knowledge. You are mentally deranged. You suffer from a defective memory. You are unable to remember real events and you persuade yourself that you remember other events which never happened. Fortunately it is curable. You have never cured yourself of it, because you did not choose to. There was a small effort of the will that you were not ready to make. Even now, I am well aware, you are clinging to your disease under the impression that it is a virtue. Now we will take an example. At this moment, which power is Oceania at war with?’

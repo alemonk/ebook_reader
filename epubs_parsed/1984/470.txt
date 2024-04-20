@@ -1,0 +1,3 @@
+Class: Paragraph---Indent
+
+The first fragment of chocolate had melted on Winston’s tongue. The taste was delightful. But there was still that memory moving round the edges of his consciousness, something strongly felt but not reducible to definite shape, like an object seen out of the corner of one’s eye. He pushed it away from him, aware only that it was the memory of some action which he would have liked to undo but could not.
