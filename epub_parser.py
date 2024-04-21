@@ -4,10 +4,11 @@ from ebooklib import epub
 from bs4 import BeautifulSoup
 
 # Read the EPUB file
-book = epub.read_epub('epubs/animal-farm.epub')
+book_name = '1984'
+book = epub.read_epub(f'epubs/{book_name}.epub')
 
 # Create a directory for the text files
-os.makedirs('epubs_parsed/Animal Farm', exist_ok=True)
+os.makedirs(f'epubs_parsed/{book_name}', exist_ok=True)
 
 # Initialize a counter for the text files
 counter = 1
@@ -28,9 +29,9 @@ for item in book.get_items():
                 br.replace_with('\n')
 
             # Write the class and the content of the <p> element to a text file
-            with open(f'epubs_parsed/Animal Farm/{counter}.txt', 'w') as f:
-                f.write(f'Class: {p_class}\n\n')
-                f.write(p.text)
+            with open(f'epubs_parsed/{book_name}/{counter}.txt', 'w') as f:
+            #    f.write(f'Class: {p_class}\n\n')
+               f.write(p.text)
             
             # Increment the counter
             counter += 1

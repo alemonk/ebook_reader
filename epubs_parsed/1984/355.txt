@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘I know that building,’ said Winston finally. ‘It’s a ruin now. It’s in the middle of the street outside the Palace of Justice.’

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 He wrote hurriedly, in scrabbling handwriting:

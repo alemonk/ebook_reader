@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘The Eleventh Edition is the definitive edition,’ he said. ‘We’re getting the language into its final shape—the shape it’s going to have when nobody speaks anything else. When we’ve finished with it, people like you will have to learn it all over again. You think, I dare say, that our chief job is inventing new words. But not a bit of it! We’re destroying words—scores of them, hundreds of them, every day. We’re cutting the language down to the bone. The Eleventh Edition won’t contain a single word that will become obsolete before the year 2050.’

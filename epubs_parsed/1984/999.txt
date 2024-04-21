@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Another example,’ he said. ‘Some years ago you had a very serious delusion indeed. You believed that three men, three one-time Party members named Jones, Aaronson, and Rutherford—men who were executed for treachery and sabotage after making the fullest possible confession—were not guilty of the crimes they were charged with. You believed that you had seen unmistakable documentary evidence proving that their confessions were false. There was a certain photograph about which you had a hallucination. You believed that you had actually held it in your hands. It was a photograph something like this.’

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘In your case,’ said O’Brien, ‘the worst thing in the world happens to be rats.’

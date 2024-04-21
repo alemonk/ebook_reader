@@ -1,65 +1,79 @@
 import sys
 import os
-picdir = os.path.join('waveshare_lib/pic')
+picdir = os.path.join("waveshare_lib/pic")
 import logging
 from waveshare_lib import epd7in5_V2
 import time
 from PIL import Image,ImageDraw,ImageFont
-import traceback
-
-logging.basicConfig(level=logging.DEBUG)
-
-def fit_text_within_screen(text, font18, epd):
-	lines = []
-	line = ""
-	for word in text.split():
-		if font18.getbbox(line + " " + word)[2] > epd.height * 0.9:
-			lines.append(line)
-			line = word
-		else:
-			line = line + " " + word if line else word
-	lines.append(line)
-	return lines
 
 
-try:
-	logging.info("epd7in5_V2 Demo")
-	epd = epd7in5_V2.EPD()
-    
-	logging.info("init and Clear")
-	epd.init()
-	epd.Clear()
+def clear_epd(epd):
+    logging.info("Clear...")
+    epd.init()
+    epd.Clear()
 
-	font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-	font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
 
-	x = 10
-	y = 10
-	text = '1some really long text 2some really long text 3some really long text 4some really long text 5some really long text'
-	lines = fit_text_within_screen(text, font18, epd)
-	    
-	# Drawing on the Vertical image
-	logging.info("2.Drawing on the Vertical image...")
-	epd.init()
-	ScreenImage = Image.new('1', (epd.height, epd.width), 255)
-	screen_buffer = ImageDraw.Draw(ScreenImage)
-	for i, line in enumerate(lines):
-		screen_buffer.text((x,y), line, font=font18, fill=0)
-		y += 18
-	epd.display(epd.getbuffer(ScreenImage))
-	time.sleep(2)
-
-    # logging.info("Clear...")
-    # epd.init()
-    # epd.Clear()
-
+def sleep_epd(epd):
 	logging.info("Goto Sleep...")
 	epd.sleep()
+
+
+def fit_text_within_screen(text, font, epd, margins):
+    lines = []
+    line = ""
+    total_text_width = epd.height - 2 * margins
+    for word in text.split():
+        word_width = font.getbbox(word)[2]
+        if word_width + font.getbbox(line)[2] > total_text_width:
+            lines.append(line)
+            line = word
+        else:
+            line = line + " " + word if line else word
+    lines.append(line)
+    return lines
+
+
+def get_content(i):
+	with open(os.path.join(f"epubs_parsed/{book}", f"{i}.txt"), "r") as file:
+		content = file.read()
+	return content
+
+
+def show_next_screen(epd, x_cursor, y_cursor):
+	clear_epd(epd)
+	ScreenImage = Image.new("1", (epd.height, epd.width), 255)
+	screen_buffer = ImageDraw.Draw(ScreenImage)
+	for i in range(1,7):
+		content = get_content(i)
+		lines = fit_text_within_screen(content, font, epd, margins)
+		for i, line in enumerate(lines):
+			print(line)
+			screen_buffer.text((x_cursor,y_cursor), line, font=font, fill=0)
+			y_cursor += font_size
+	epd.display(epd.getbuffer(ScreenImage))
+
+
+logging.basicConfig(level=logging.DEBUG)
+try:
+	# Parameters
+	margins = 10
+	x = margins
+	y = margins
+	font_size = 24
+	font = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), font_size)
+	book = "1984"
     
+    # Setup epaper display
+	logging.info("init and Clear")
+	epd = epd7in5_V2.EPD()
+	
+	show_next_screen(epd, x, y)
+
+	sleep_epd(epd)
+
 except IOError as e:
-    logging.info(e)
-    
+	logging.info(e)
 except KeyboardInterrupt:    
-    logging.info("ctrl + c:")
-    epd7in5_V2.epdconfig.module_exit(cleanup=True)
-    exit()
+	logging.info("ctrl + c:")
+	epd7in5_V2.epdconfig.module_exit(cleanup=True)
+	exit()

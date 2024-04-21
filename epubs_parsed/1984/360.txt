@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘I never knew it had been a church,’ he said.

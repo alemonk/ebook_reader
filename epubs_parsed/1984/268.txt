@@ -1,3 +1,1 @@
-Class: Paragraph---Blockquote
-
 I understand HOW: I do not understand WHY.

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘I likes a pint,’ persisted the old man. ‘You could ‘a drawed me off a pint easy enough. We didn’t ‘ave these bleeding litres when I was a young man.’

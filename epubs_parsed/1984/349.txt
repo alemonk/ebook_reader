@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘There’s no telescreen!’ he could not help murmuring.

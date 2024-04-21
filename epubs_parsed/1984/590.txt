@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘It’s twenty-three at the hostel. But you have to get in earlier than that, because—Hi! Get out, you filthy brute!’

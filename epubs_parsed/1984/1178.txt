@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Then what is it, this principle that will defeat us?’

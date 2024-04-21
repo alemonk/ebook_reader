@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Does Big Brother exist?’

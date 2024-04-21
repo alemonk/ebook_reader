@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Will Big Brother ever die?’

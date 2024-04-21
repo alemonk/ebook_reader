@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Black, very shabby. With two straps.’

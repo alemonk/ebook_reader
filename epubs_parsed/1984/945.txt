@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 The chinless man dropped the piece of bread on the floor.

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘I don’t care. In the end they will beat you. Sooner or later they will see you for what you are, and then they will tear you to pieces.’

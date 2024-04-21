@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Well, I wouldn’t!’ said Julia. ‘I’m quite ready to take risks, but only for something worth while, not for bits of old newspaper. What could you have done with it even if you had kept it?’

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘It’s the Golden Country—almost,’ he murmured.

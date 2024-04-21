@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Do you know where you are, Winston?’ he said.

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 Winston explained about the room over Mr Charrington’s shop.

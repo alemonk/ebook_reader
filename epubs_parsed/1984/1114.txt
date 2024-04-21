@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘It is of no importance. He exists.’

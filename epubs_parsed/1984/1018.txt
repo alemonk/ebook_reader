@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘In the mind. In human memories.’

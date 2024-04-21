@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘The house is surrounded,’ said Winston.

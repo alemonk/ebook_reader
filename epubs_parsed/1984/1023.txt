@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 He paused for a few moments, as though to allow what he had been saying to sink in.

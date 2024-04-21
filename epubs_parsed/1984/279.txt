@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Ah,’ said the other, ‘that’s jest it. That’s jest where it is.’

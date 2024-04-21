@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Don’t go out into the open. There might be someone watching. We’re all right if we keep behind the boughs.’

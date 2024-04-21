@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 The aims of these groups are entirely irreconcilable...

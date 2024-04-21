@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘You did well to tell me,’ said O’Brien. ‘It is necessary for us to know everything.’

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Room 101,’ he said.

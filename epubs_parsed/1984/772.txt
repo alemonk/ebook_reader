@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Yes, I knew the last line. And now, I am afraid, it is time for you to go. But wait. You had better let me give you one of these tablets.’

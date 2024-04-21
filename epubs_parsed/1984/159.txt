@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Did you go and see the prisoners hanged yesterday?’ said Syme.

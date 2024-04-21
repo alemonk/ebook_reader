@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Who taught you that?’ he said.

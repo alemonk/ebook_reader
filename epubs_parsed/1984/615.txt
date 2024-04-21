@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘I can remember lemons,’ said Winston. ‘They were quite common in the fifties. They were so sour that it set your teeth on edge even to smell them.’

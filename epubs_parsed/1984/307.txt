@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘You must have seen great changes since you were a young man,’ said Winston tentatively.

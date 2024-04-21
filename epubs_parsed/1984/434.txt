@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘About fifteen. You may have to wait. I’ll get there by another way. Are you sure you remember everything?’

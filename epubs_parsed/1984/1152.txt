@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘But the whole universe is outside us. Look at the stars! Some of them are a million light-years away. They are out of our reach for ever.’

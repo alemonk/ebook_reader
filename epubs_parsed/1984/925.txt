@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘YOU here!’ he said.

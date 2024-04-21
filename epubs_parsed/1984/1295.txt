@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘No,’ he said, ‘you don’t feel the same.’

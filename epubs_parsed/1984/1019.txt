@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘In memory. Very well, then. We, the Party, control all records, and we control all memories. Then we control the past, do we not?’

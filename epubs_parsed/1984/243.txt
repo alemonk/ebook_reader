@@ -1,3 +1,1 @@
-Class: Paragraph---First
-
 ‘If there is hope,’ wrote Winston, ‘it lies in the proles.’

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Dearest! You’ve gone quite pale. What’s the matter? Do they make you feel sick?’

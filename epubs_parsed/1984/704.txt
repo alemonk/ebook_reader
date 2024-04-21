@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Yes, everything is turned off. We are alone.’

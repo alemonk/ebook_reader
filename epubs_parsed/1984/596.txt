@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘DON’T GO ON!’ said Winston, with his eyes tightly shut.

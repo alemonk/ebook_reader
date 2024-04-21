@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘The worst thing in the world,’ said O’Brien, ‘varies from individual to individual. It may be burial alive, or death by fire, or by drowning, or by impalement, or fifty other deaths. There are cases where it is some quite trivial thing, not even fatal.’

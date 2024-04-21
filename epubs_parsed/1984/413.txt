@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Victory Square, near the monument.’

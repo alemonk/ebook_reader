@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘That is her style of beauty,’ said Winston.

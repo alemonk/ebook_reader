@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 They were silent for a moment.

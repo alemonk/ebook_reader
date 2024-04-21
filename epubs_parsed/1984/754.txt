@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘The past is more important,’ agreed O’Brien gravely.

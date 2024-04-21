@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Then where does the past exist, if at all?’

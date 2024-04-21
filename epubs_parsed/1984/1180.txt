@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘And do you consider yourself a man?’

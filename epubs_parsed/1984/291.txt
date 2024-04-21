@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Oh, pack it in!’ said the third man.

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 Sometimes, Winston. Sometimes they are five. Sometimes they are three. Sometimes they are all of them at once. You must try harder. It is not easy to become sane.’

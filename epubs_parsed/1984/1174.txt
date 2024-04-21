@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Do you see any evidence that that is happening? Or any reason why it should?’

@@ -1,4 +1,0 @@
-Class: calibre3
-
-Animal Farm
- by George Orwell

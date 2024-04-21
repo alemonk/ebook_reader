@@ -1,4 +1,0 @@
-Class: block_3
-
-
- 

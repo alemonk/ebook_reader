@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Smith!’ yelled the voice from the telescreen. ‘6079 Smith W! Uncover your face. No faces covered in the cells.’

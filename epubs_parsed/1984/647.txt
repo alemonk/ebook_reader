@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘But you write it very elegantly,’ said O’Brien. ‘That is not only my own opinion. I was talking recently to a friend of yours who is certainly an expert. His name has slipped my memory for the moment.’

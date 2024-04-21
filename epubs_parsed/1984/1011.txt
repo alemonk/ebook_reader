@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘’Who controls the present controls the past,‘‘ said O’Brien, nodding his head with slow approval. ‘Is it your opinion, Winston, that the past has real existence?’

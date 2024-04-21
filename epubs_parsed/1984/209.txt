@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Not one,’ said Winston. ‘I’ve been using the same blade for six weeks myself.’

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘May I offer you a drink?’ he said.

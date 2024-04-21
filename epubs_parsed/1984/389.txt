@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘It’s nothing. My arm. It’ll be all right in a second.’

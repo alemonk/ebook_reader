@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘No, I’m all right. It hurt for a moment, that’s all.’

@@ -1,3 +1,1 @@
-Class: Paragraph---Blockquote
-
 2+2=5 

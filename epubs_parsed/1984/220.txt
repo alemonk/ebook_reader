@@ -1,3 +1,1 @@
-Class: Paragraph---First
-
 Winston was writing in his diary:

@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘You are prepared to commit suicide, if and when we order you to do so?’

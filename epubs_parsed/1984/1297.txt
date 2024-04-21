@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘We must meet again,’ he said.

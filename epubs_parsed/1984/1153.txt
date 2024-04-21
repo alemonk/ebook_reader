@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘What are the stars?’ said O’Brien indifferently. ‘They are bits of fire a few kilometres away. We could reach them if we wanted to. Or we could blot them out. The earth is the centre of the universe. The sun and the stars go round it.’

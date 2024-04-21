@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘I’m thirty-nine years old. I’ve got a wife that I can’t get rid of. I’ve got varicose veins. I’ve got five false teeth.’

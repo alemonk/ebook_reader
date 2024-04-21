@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘There are a couple of minutes before you need go,’ said O’Brien. ‘We shall meet again—if we do meet again——’

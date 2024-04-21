@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 He released Winston with a little push towards the guards.

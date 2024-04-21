@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Get up from that bed,’ he said.

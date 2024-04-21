@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Four. I suppose there are four. I would see five if I could. I am trying to see five.’

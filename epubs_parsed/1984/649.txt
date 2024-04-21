@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘What I had really intended to say was that in your article I noticed you had used two words which have become obsolete. But they have only become so very recently. Have you seen the tenth edition of the Newspeak Dictionary?’

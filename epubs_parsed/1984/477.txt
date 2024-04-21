@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘That’s right, there is a stream. It’s at the edge of the next field, actually. There are fish in it, great big ones. You can watch them lying in the pools under the willow trees, waving their tails.’

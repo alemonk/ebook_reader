@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Which do you wish: to persuade me that you see five, or really to see them?’

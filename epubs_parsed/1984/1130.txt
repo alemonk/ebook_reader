@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Is it true, what it says?’

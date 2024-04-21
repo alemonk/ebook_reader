@@ -1,4 +1,0 @@
-Class: calibre3
-
-The artwork for the cover is Farm idyll with pigs and chickens
- painted by Carl Bøgh.

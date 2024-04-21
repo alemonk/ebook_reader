@@ -1,3 +1,1 @@
-Class: Paragraph---Indent
-
 ‘Has it ever occurred to you,’ he said, ‘that the whole history of English poetry has been determined by the fact that the English language lacks rhymes?’
