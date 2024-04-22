@@ -17,8 +17,8 @@ def clear_epd(epd):
 
 def sleep_epd(epd):
 	logging.info("Goto Sleep...")
-	print("Ready")
 	epd.sleep()
+	print("Ready")
 
 
 def fit_text_within_screen(text, font, epd, margins):
@@ -50,7 +50,7 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 
 	old_index = index
 
-	epd.init()
+	epd.init_fast()
 	ScreenImage = Image.new("1", (width, height), 255)
 	screen_buffer = ImageDraw.Draw(ScreenImage)
 	text_height = height - 2 * margins
@@ -86,11 +86,13 @@ def show_previous_screen(epd, x, y):
 	global index
 	global old_index
 
-	index = 0 if old_index==0 else (old_index - 3)
+	index = old_index - 3
+	if index < 0:
+		index = 0
 	return show_next_screen(epd, x, y)
 
 
-# logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 try:
     # Setup epaper display
 	logging.info("init and Clear")
@@ -101,8 +103,8 @@ try:
 	book = "1984"
 	filepath = "epubs_parsed/" + book
 	margins = 5
-	height = epd.width
-	width = epd.height
+	width = epd.width
+	height = epd.height
 	font_size = 25
 	line_space = 1
 	n_button = 26
@@ -121,6 +123,7 @@ try:
 
 	# while True:
 	# 	extra_lines = show_next_screen(epd, x, y, extra_lines)
+	# ScreenImage = Image.new("1", (width, height), 255)
 
 	while True:
 		double_click_event = False
