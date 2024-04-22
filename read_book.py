@@ -24,7 +24,7 @@ def sleep_epd(epd):
 def fit_text_within_screen(text, font, epd, margins):
     lines = []
     line = ""
-    text_width = epd.height - 2 * margins
+    text_width = width - 2 * margins
     for word in text.split():
         word_width = font.getbbox(word)[2]
         if word_width + font.getbbox(line)[2] > text_width:
@@ -51,9 +51,9 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 	old_index = index
 	
 	epd.init()
-	ScreenImage = Image.new("1", (epd.height, epd.width), 255)
+	ScreenImage = Image.new("1", (width, height), 255)
 	screen_buffer = ImageDraw.Draw(ScreenImage)
-	text_height = epd.width - 2 * margins
+	text_height = height - 2 * margins
 	extra_lines = []
 	
 	if overflow_lines:
@@ -92,10 +92,17 @@ def show_previous_screen(epd, x, y):
 
 # logging.basicConfig(level=logging.DEBUG)
 try:
+    # Setup epaper display
+	logging.info("init and Clear")
+	epd = epd7in5_V2.EPD()
+	clear_epd(epd)
+	
 	# Parameters and variables
 	book = "1984"
 	filepath = "epubs_parsed/" + book
 	margins = 5
+	height = epd.width
+	width = epd.height
 	font_size = 25
 	line_space = 1
 	n_button = 26
@@ -103,18 +110,17 @@ try:
 	font = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), font_size)
 	x = margins
 	y = margins
-	index = load_index(filepath)
+	# index = load_index(filepath)
+	index = 0
 	old_index = 0
 	extra_lines = ""
-    
-    # Setup epaper display
-	logging.info("init and Clear")
-	epd = epd7in5_V2.EPD()
-	clear_epd(epd)
 	
 	# Setup buttons
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(n_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	
+	# while True:
+	# 	extra_lines = show_next_screen(epd, x, y, extra_lines)
 	
 	while True:
 		double_click_event = False
