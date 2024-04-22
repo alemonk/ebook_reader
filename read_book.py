@@ -47,15 +47,15 @@ def get_content(i):
 def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 	global index
 	global old_index
-	
+
 	old_index = index
-	
+
 	epd.init()
 	ScreenImage = Image.new("1", (width, height), 255)
 	screen_buffer = ImageDraw.Draw(ScreenImage)
 	text_height = height - 2 * margins
 	extra_lines = []
-	
+
 	if overflow_lines:
 		for _, line in enumerate(overflow_lines):
 			if y_cursor > text_height - font_size:
@@ -64,7 +64,7 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 				# print(line)
 				screen_buffer.text((x_cursor,y_cursor), line, font=font, fill=0)
 				y_cursor += font_size + line_space
-					
+
 	while y_cursor <= text_height - font_size:
 		index += 1
 		content = get_content(index)
@@ -85,8 +85,8 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 def show_previous_screen(epd, x, y):
 	global index
 	global old_index
-	
-	index = 0 if old_index==0 else (old_index - 3) 
+
+	index = 0 if old_index==0 else (old_index - 3)
 	return show_next_screen(epd, x, y)
 
 
@@ -96,7 +96,7 @@ try:
 	logging.info("init and Clear")
 	epd = epd7in5_V2.EPD()
 	clear_epd(epd)
-	
+
 	# Parameters and variables
 	book = "1984"
 	filepath = "epubs_parsed/" + book
@@ -110,25 +110,25 @@ try:
 	font = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), font_size)
 	x = margins
 	y = margins
-	# index = load_index(filepath)
-	index = 0
+	index = load_index(filepath)
+	# index = 0
 	old_index = 0
 	extra_lines = ""
-	
+
 	# Setup buttons
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(n_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-	
+
 	# while True:
 	# 	extra_lines = show_next_screen(epd, x, y, extra_lines)
-	
+
 	while True:
 		double_click_event = False
-		
+
 		if GPIO.input(n_button) == GPIO.HIGH:
 			t = time.time()
 			time.sleep(debounce_period)
-			
+
 			while time.time() - t < (0.8 - debounce_period):
 				if GPIO.input(n_button) == GPIO.HIGH:
 					double_click_event = True
@@ -142,7 +142,7 @@ try:
 
 except IOError as e:
 	logging.info(e)
-except KeyboardInterrupt:    
+except KeyboardInterrupt:
 	logging.info("ctrl + c:")
 	print("GPIO cleanup")
 	print("epd cleanup")
