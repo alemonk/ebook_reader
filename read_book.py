@@ -5,6 +5,8 @@ import logging
 from waveshare_lib import epd7in5_V2
 import time
 from PIL import Image,ImageDraw,ImageFont
+import RPi.GPIO as GPIO
+from utils import *
 
 
 def clear_epd(epd):
@@ -15,6 +17,7 @@ def clear_epd(epd):
 
 def sleep_epd(epd):
 	logging.info("Goto Sleep...")
+	print("Ready")
 	epd.sleep()
 
 
@@ -34,16 +37,20 @@ def fit_text_within_screen(text, font, epd, margins):
 
 
 def get_content(i):
-	with open(os.path.join(f"epubs_parsed/{book}", f"{i}.txt"), "r") as file:
+	with open(os.path.join(f"{filepath}", f"{i}.txt"), "r") as file:
 		content = file.read()
 	print(f"Opening file {i}")
+	# print(content)
 	return content
 
 
 def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
-	print("++++++++++++++++++++++++++++++++")
 	global index
-	# clear_epd(epd)
+	global old_index
+	
+	old_index = index
+	
+	epd.init()
 	ScreenImage = Image.new("1", (epd.height, epd.width), 255)
 	screen_buffer = ImageDraw.Draw(ScreenImage)
 	text_height = epd.width - 2 * margins
@@ -70,38 +77,69 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 				screen_buffer.text((x_cursor,y_cursor), line, font=font, fill=0)
 				y_cursor += font_size + line_space
 	epd.display(epd.getbuffer(ScreenImage))
+	sleep_epd(epd)
+	save_index(filepath, old_index)
 	return extra_lines
 
 
-logging.basicConfig(level=logging.DEBUG)
+def show_previous_screen(epd, x, y):
+	global index
+	global old_index
+	
+	index = 0 if old_index==0 else (old_index - 3) 
+	return show_next_screen(epd, x, y)
+
+
+# logging.basicConfig(level=logging.DEBUG)
 try:
-	# Parameters
+	# Parameters and variables
+	book = "1984"
+	filepath = "epubs_parsed/" + book
 	margins = 5
-	x = margins
-	y = margins
 	font_size = 25
 	line_space = 1
+	n_button = 26
+	debounce_period = 0.2
 	font = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), font_size)
-	
-	index = 0
-	book = "1984"
+	x = margins
+	y = margins
+	index = load_index(filepath)
+	old_index = 0
+	extra_lines = ""
     
     # Setup epaper display
 	logging.info("init and Clear")
 	epd = epd7in5_V2.EPD()
 	clear_epd(epd)
 	
-	extra_lines = show_next_screen(epd, x, y)
+	# Setup buttons
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setup(n_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	
-	for _ in range(10):
-		time.sleep(0.5)
-		extra_lines = show_next_screen(epd, x, y, extra_lines)
+	while True:
+		double_click_event = False
+		
+		if GPIO.input(n_button) == GPIO.HIGH:
+			t = time.time()
+			time.sleep(debounce_period)
+			
+			while time.time() - t < (0.8 - debounce_period):
+				if GPIO.input(n_button) == GPIO.HIGH:
+					double_click_event = True
 
-	sleep_epd(epd)
+			if double_click_event:
+				print_highlight("Previous page")
+				extra_lines = show_previous_screen(epd, x, y)
+			else:
+				print_highlight("Next page")
+				extra_lines = show_next_screen(epd, x, y, extra_lines)
 
 except IOError as e:
 	logging.info(e)
 except KeyboardInterrupt:    
 	logging.info("ctrl + c:")
+	print("GPIO cleanup")
+	print("epd cleanup")
+	GPIO.cleanup()
 	epd7in5_V2.epdconfig.module_exit(cleanup=True)
 	exit()
