@@ -9,6 +9,7 @@ import RPi.GPIO as GPIO
 from utils import *
 
 # Parameters
+VERTICAL = False
 margins = 0
 font_size = 25
 paragraph_space = 5
@@ -83,8 +84,8 @@ def show_previous_screen(epd, x, y):
 	global old_index
 
 	index = old_index - 1
-	if index < 0:
-		index = 0
+	if index <= 0:
+		index = 1
 	return show_next_screen(epd, x, y)
 
 
@@ -94,8 +95,8 @@ try:
 	logging.info("init and Clear")
 	epd = epd7in5_V2.EPD()
 	clear_epd(epd)
-	width = epd.width
-	height = epd.height
+	width = epd.height if VERTICAL else epd.width
+	height = epd.width if VERTICAL else epd.height
 
 	# Variables
 	book = get_book_name()

@@ -16,5 +16,6 @@ pip install numpy
 sudo apt-get install python3-pil
 pip install ebooklib
 pip install bs4
+pip install lgpio
 
 deactivate

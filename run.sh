@@ -1,7 +1,14 @@
 #!/bin/bash
 
+BOOK="1984"
+FILEPATH="parsed_epubs/${BOOK}"
+
 source pyenv/bin/activate
-
-sudo python3 read_book.py --book "1984"
-
+if [ ! -d "$FILEPATH" ]; then
+	echo "Parsing $BOOK..."
+	python3 epub_parser.py --book $BOOK
+fi
+echo "Opening $BOOK... enjoy!"
+python3 read_book.py --book $BOOK
 deactivate
+
