@@ -24,7 +24,7 @@ def sleep_epd(epd):
 def fit_text_within_screen(text, font, epd, margins):
 	lines = []
 	line = ""
-	text_width = width - 2 * margins
+	text_width = width - 2 * margins - font_size/2 # Added font_size/2 to prevent overshoot if margins are tiny
 	first_word = True
 	for word in text.split():
 		if first_word:
@@ -106,7 +106,7 @@ def show_previous_screen(epd, x, y):
 	global index
 	global old_index
 
-	index = old_index - 3
+	index = old_index - 1
 	if index < 0:
 		index = 0
 	return show_next_screen(epd, x, y)
@@ -129,7 +129,7 @@ try:
 	paragraph_space = 5
 	n_button = 26
 	debounce_period = 0.2
-	font = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), font_size)
+	font = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), font_size)
 	x = margins
 	y = margins
 	index = load_index(filepath)
