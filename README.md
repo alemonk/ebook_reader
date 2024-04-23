@@ -8,8 +8,8 @@ Follow these steps to install and set up the eBook reader on your Raspberry Pi:
 
 1. **Clone the Repository**: Clone this git repository to your Raspberry Pi and navigate to the directory containing the repository. You can do this with the following commands:
     ```bash
-    git clone <repository_url>
-    cd <repository_directory>
+    git clone git@github.com:alemonk/ebook_reader.git
+    cd ebook_reader
     ```
 
 2. **Run the Install Script**: Execute the `install.sh` script. This script installs necessary dependencies and sets up a Python virtual environment. Run the script with the following command:
@@ -23,7 +23,7 @@ Follow these steps to install and set up the eBook reader on your Raspberry Pi:
     ```
     Before the line that says `exit 0`, insert the following command:
     ```bash
-    cd /home/alemonk/ebook_reader && bash run.sh &
+    cd /path/to/repository/ebook_reader && bash run.sh &
     ```
     Save and exit the file.
 
@@ -33,4 +33,3 @@ Follow these steps to install and set up the eBook reader on your Raspberry Pi:
     ```
 
 After following these steps, the eBook reader application will start automatically whenever the Raspberry Pi is powered on. Enjoy your reading!
-
