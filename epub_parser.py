@@ -8,7 +8,7 @@ book_name = '1984'
 book = epub.read_epub(f'epubs/{book_name}.epub')
 
 # Create a directory for the text files
-os.makedirs(f'epubs_parsed/{book_name}', exist_ok=True)
+os.makedirs(f'parsed_epubs/{book_name}', exist_ok=True)
 
 # Initialize a counter for the text files
 counter = 1
@@ -29,7 +29,7 @@ for item in book.get_items():
                 br.replace_with('\n')
 
             # Write the class and the content of the <p> element to a text file
-            with open(f'epubs_parsed/{book_name}/{counter}.txt', 'w') as f:
+            with open(f'parsed_epubs/{book_name}/{counter}.txt', 'w') as f:
             #    f.write(f'Class: {p_class}\n\n')
                f.write(p.text)
             

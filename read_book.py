@@ -101,7 +101,7 @@ try:
 
 	# Parameters and variables
 	book = "1984"
-	filepath = "epubs_parsed/" + book
+	filepath = "parsed_epubs/" + book
 	margins = 5
 	width = epd.width
 	height = epd.height
