@@ -14,5 +14,7 @@ pip install RPi.GPIO
 pip install gpiozero
 pip install numpy
 sudo apt-get install python3-pil
+pip install ebooklib
+pip install bs4
 
 deactivate
