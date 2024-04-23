@@ -98,7 +98,7 @@ try:
 	height = epd.height
 
 	# Variables
-	book = "1984"
+	book = get_book_name()
 	filepath = "parsed_epubs/" + book
 	x = margins
 	y = margins

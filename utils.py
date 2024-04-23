@@ -3,12 +3,26 @@
 import json
 import os
 import logging
+import argparse
 
 def print_highlight(text):
     print('\n')
     print('-----------------------------------------------------------------------------')
     print('--------\t' + text)
     print()
+
+
+def get_book_name():
+	parser = argparse.ArgumentParser(description='Read a book.')
+	parser.add_argument('-b', '--book',
+                    type=str,
+                    help='The name of the book to read')
+
+	args = parser.parse_args()
+	if args.book:
+		return args.book
+	print("Opening default book: 1984")
+	return "1984"
 
 
 def clear_epd(epd):
@@ -95,3 +109,4 @@ def save_index(filepath, old_index):
 #             text_content = '\n' + text_content + '\n'
 
 #         return font, alignment, text_content, font_italic
+
