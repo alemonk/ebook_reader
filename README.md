@@ -48,12 +48,4 @@ Ensure that the shebang line (`#!/bin/bash`) is present at the top of the file. 
 
 If you’re still experiencing problems, a good way to troubleshoot is to check the system logs. Depending on your system, you can use either `sudo journalctl` or `sudo cat /var/log/syslog`. These commands will display system logs that can help identify any errors.
 
-For example, to check for rc.local related entries in the system logs, you can use the following command:
-    ```bash
-    sudo journalctl | grep rc.local
-    ```
-
-or
-    ```bash
-    sudo cat /var/log/syslog | grep rc.local
-    ```
+For example, to check for rc.local related entries in the system logs, you can use `sudo journalctl | grep rc.local` or `sudo cat /var/log/syslog | grep rc.local`.
