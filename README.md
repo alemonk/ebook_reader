@@ -35,22 +35,24 @@ Follow these steps to install and set up the eBook reader on your Raspberry Pi:
 
 After following these steps, the eBook reader application will start automatically whenever the Raspberry Pi is powered on. Enjoy your reading!
 
-# Troubleshooting
+## Troubleshooting
 
 If you encounter issues where the Raspberry Pi doesn’t execute the program on reboot, it’s important to check the `/etc/rc.local` file. The file should look like this:
 
-    ```bash
-    #!/bin/bash
-    cd /path/to/repository/ebook_reader && bash run.sh &
-    exit 0
-    ```
-
+```bash
+#!/bin/bash
+cd /path/to/repository/ebook_reader && bash run.sh &
+exit 0
+```
 Ensure that the shebang line (`#!/bin/bash`) is present at the top of the file. This line specifies the interpreter for the script. Also, make sure that the exit 0 line is at the end of the file. This line signifies that the script has finished executing successfully.
+
 If you’re still experiencing problems, a good way to troubleshoot is to check the system logs. Depending on your system, you can use either `sudo journalctl` or `sudo cat /var/log/syslog`. These commands will display system logs that can help identify any errors.
+
 For example, to check for rc.local related entries in the system logs, you can use the following command:
     ```bash
     sudo journalctl | grep rc.local
     ```
+
 or
     ```bash
     sudo cat /var/log/syslog | grep rc.local
