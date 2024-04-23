@@ -91,7 +91,7 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 	n_files = len(lst) - 1
 	progress = f"Page {index}/{n_files} - {str(round(100 * index/n_files, 2))} %"
 	progress_width = width * index / n_files
-	font_small = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), font_size-5)
+	font_small = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), font_size-5)
 	screen_buffer.rectangle((0,height-4,progress_width,height), fill=0)
 	screen_buffer.text((round(margins/2),height-font_size-round(margins/2)), progress, font=font_small, fill=0)
 
