@@ -53,7 +53,7 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 	epd.init_fast()
 	ScreenImage = Image.new("1", (width, height), 255)
 	screen_buffer = ImageDraw.Draw(ScreenImage)
-	text_height = height - 2 * margins
+	text_height = height - 2 * margins - font_size
 	extra_lines = []
 
 	if overflow_lines:
@@ -76,6 +76,17 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 				# print(line)
 				screen_buffer.text((x_cursor,y_cursor), line, font=font, fill=0)
 				y_cursor += font_size + line_space
+
+	# Progress bar
+	lst = os.listdir(filepath)
+	n_files = len(lst) - 1
+	progress = str(round(100 * index/n_files, 2)) + f" % - page {index}/{n_files}"
+	progress_width = width * index / n_files
+	font_small = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), font_size-5)
+	screen_buffer.rectangle((0,height-4,progress_width,height), fill=0)
+	screen_buffer.text((round(margins/2),height-font_size-round(margins/2)), progress, font=font_small, fill=0)
+
+	# Update screen
 	epd.display(epd.getbuffer(ScreenImage))
 	sleep_epd(epd)
 	save_index(filepath, old_index)
@@ -102,7 +113,7 @@ try:
 	# Parameters and variables
 	book = "1984"
 	filepath = "parsed_epubs/" + book
-	margins = 5
+	margins = 0
 	width = epd.width
 	height = epd.height
 	font_size = 25
@@ -124,6 +135,7 @@ try:
 	# while True:
 	# 	extra_lines = show_next_screen(epd, x, y, extra_lines)
 	# ScreenImage = Image.new("1", (width, height), 255)
+	extra_lines = show_next_screen(epd, x, y)
 
 	while True:
 		double_click_event = False
@@ -152,3 +164,4 @@ except KeyboardInterrupt:
 	GPIO.cleanup()
 	epd7in5_V2.epdconfig.module_exit(cleanup=True)
 	exit()
+
