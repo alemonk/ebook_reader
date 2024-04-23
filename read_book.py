@@ -9,41 +9,6 @@ import RPi.GPIO as GPIO
 from utils import *
 
 
-def clear_epd(epd):
-	logging.info("Clear...")
-	epd.init()
-	epd.Clear()
-
-
-def sleep_epd(epd):
-	logging.info("Goto Sleep...")
-	epd.sleep()
-	print("Ready")
-
-
-def fit_text_within_screen(text, font, epd, margins):
-	lines = []
-	line = ""
-	text_width = width - 2 * margins - font_size/2 # Added font_size/2 to prevent overshoot if margins are tiny
-	first_word = True
-	for word in text.split():
-		if first_word:
-			word = "    " + word
-			first_word = False
-		if word != "__newline__":
-			word_width = font.getbbox(word)[2]
-			if word_width + font.getbbox(line)[2] > text_width:
-				lines.append(line)
-				line = word
-			else:
-				line = line + " " + word if line else word
-		else:
-			lines.append(line)
-			line = ""
-	lines.append(line)
-	return lines
-
-
 def get_content(i):
 	with open(os.path.join(f"{filepath}", f"{i}.txt"), "r") as file:
 		content = file.read()
@@ -77,7 +42,7 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 		index += 1
 		y_cursor += paragraph_space
 		content = get_content(index)
-		lines = fit_text_within_screen(content, font, epd, margins)
+		lines = fit_text_within_screen(content, font, margins, width, font_size)
 		for _, line in enumerate(lines):
 			if y_cursor > text_height - font_size:
 				extra_lines.append(line)
