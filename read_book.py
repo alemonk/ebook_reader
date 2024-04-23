@@ -10,9 +10,9 @@ from utils import *
 
 
 def clear_epd(epd):
-    logging.info("Clear...")
-    epd.init()
-    epd.Clear()
+	logging.info("Clear...")
+	epd.init()
+	epd.Clear()
 
 
 def sleep_epd(epd):
@@ -22,25 +22,33 @@ def sleep_epd(epd):
 
 
 def fit_text_within_screen(text, font, epd, margins):
-    lines = []
-    line = ""
-    text_width = width - 2 * margins
-    for word in text.split():
-        word_width = font.getbbox(word)[2]
-        if word_width + font.getbbox(line)[2] > text_width:
-            lines.append(line)
-            line = word
-        else:
-            line = line + " " + word if line else word
-    lines.append(line)
-    return lines
+	lines = []
+	line = ""
+	text_width = width - 2 * margins
+	first_word = True
+	for word in text.split():
+		if first_word:
+			word = "    " + word
+			first_word = False
+		if word != "__newline__":
+			word_width = font.getbbox(word)[2]
+			if word_width + font.getbbox(line)[2] > text_width:
+				lines.append(line)
+				line = word
+			else:
+				line = line + " " + word if line else word
+		else:
+			lines.append(line)
+			line = ""
+	lines.append(line)
+	return lines
 
 
 def get_content(i):
 	with open(os.path.join(f"{filepath}", f"{i}.txt"), "r") as file:
 		content = file.read()
 	print(f"Opening file {i}")
-	# print(content)
+
 	return content
 
 
@@ -63,10 +71,11 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 			else:
 				# print(line)
 				screen_buffer.text((x_cursor,y_cursor), line, font=font, fill=0)
-				y_cursor += font_size + line_space
+				y_cursor += font_size
 
 	while y_cursor <= text_height - font_size:
 		index += 1
+		y_cursor += paragraph_space
 		content = get_content(index)
 		lines = fit_text_within_screen(content, font, epd, margins)
 		for _, line in enumerate(lines):
@@ -75,12 +84,12 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 			else:
 				# print(line)
 				screen_buffer.text((x_cursor,y_cursor), line, font=font, fill=0)
-				y_cursor += font_size + line_space
+				y_cursor += font_size
 
 	# Progress bar
 	lst = os.listdir(filepath)
 	n_files = len(lst) - 1
-	progress = str(round(100 * index/n_files, 2)) + f" % - page {index}/{n_files}"
+	progress = f"Page {index}/{n_files} - {str(round(100 * index/n_files, 2))} %"
 	progress_width = width * index / n_files
 	font_small = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), font_size-5)
 	screen_buffer.rectangle((0,height-4,progress_width,height), fill=0)
@@ -117,7 +126,7 @@ try:
 	width = epd.width
 	height = epd.height
 	font_size = 25
-	line_space = 1
+	paragraph_space = 5
 	n_button = 26
 	debounce_period = 0.2
 	font = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), font_size)

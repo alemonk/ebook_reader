@@ -26,12 +26,12 @@ for item in book.get_items():
 
             # Handle <br/> tags
             for br in p.find_all('br'):
-                br.replace_with('\n')
+                br.replace_with('__newline__ ')
 
             # Write the class and the content of the <p> element to a text file
             with open(f'parsed_epubs/{book_name}/{counter}.txt', 'w') as f:
             #    f.write(f'Class: {p_class}\n\n')
                f.write(p.text)
-            
+
             # Increment the counter
             counter += 1
