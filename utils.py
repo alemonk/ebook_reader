@@ -4,6 +4,11 @@ import json
 import os
 import logging
 import argparse
+from waveshare_lib import epd7in5_V2
+from PIL import Image,ImageDraw,ImageFont
+import RPi.GPIO as GPIO
+picdir = os.path.join("waveshare_lib/pic")
+import time
 
 def print_highlight(text):
     print('\n')
@@ -75,6 +80,33 @@ def save_index(filepath, old_index):
     fd = os.open(index_file, os.O_WRONLY | os.O_CREAT, 0o644)
     with os.fdopen(fd, "w") as file:
         json.dump(old_index, file)
+
+
+def error_screen(err):
+    # Parameters
+    FONT_SIZE = 25
+    FONT = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), FONT_SIZE)
+
+    # Setup epaper display
+    logging.info("init and Clear")
+    epd = epd7in5_V2.EPD()
+    width = epd.width
+    height = epd.height
+
+    epd.init()
+    ScreenImage = Image.new("1", (width, height), 255)
+    screen_buffer = ImageDraw.Draw(ScreenImage)
+    screen_buffer.text((0,FONT_SIZE*0), f"Error: {err}", font=FONT, fill=0)
+    screen_buffer.text((0,FONT_SIZE*2), "Please refer to GitHub for more info.", font=FONT, fill=0)
+    screen_buffer.text((0,FONT_SIZE*3), "(or ask Alessandro)", font=FONT, fill=0)
+
+    # Update screen
+    epd.display(epd.getbuffer(ScreenImage))
+    sleep_epd(epd)
+
+    while True:
+        print("Sleep...")
+        time.sleep(1984)
 
 
 # class ContentFormatter:

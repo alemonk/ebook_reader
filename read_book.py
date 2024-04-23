@@ -132,8 +132,9 @@ try:
 				print_highlight("Next page")
 				extra_lines = show_next_screen(epd, x, y, extra_lines)
 
-except IOError as e:
+except Exception as e:
 	logging.info(e)
+	error_screen(e)
 except KeyboardInterrupt:
 	logging.info("ctrl + c:")
 	print("GPIO cleanup")
