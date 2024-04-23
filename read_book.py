@@ -8,12 +8,22 @@ from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 from utils import *
 
+# Parameters
+margins = 0
+font_size = 25
+paragraph_space = 5
+button_bcm = 26
+debounce_period = 0.2
+font = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), font_size)
 
 def get_content(i):
-	with open(os.path.join(f"{filepath}", f"{i}.txt"), "r") as file:
-		content = file.read()
-	print(f"Opening file {i}")
-
+	try:
+		with open(os.path.join(f"{filepath}", f"{i}.txt"), "r") as file:
+			content = file.read()
+		print(f"Opening file {i}")
+	except FileNotFoundError:
+		content = "T H E _ E N D _ " * 100
+		print(f"File {i} not found, returning default content")
 	return content
 
 
@@ -39,7 +49,6 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 				y_cursor += font_size
 
 	while y_cursor <= text_height - font_size:
-		index += 1
 		y_cursor += paragraph_space
 		content = get_content(index)
 		lines = fit_text_within_screen(content, font, margins, width, font_size)
@@ -50,12 +59,15 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 				# print(line)
 				screen_buffer.text((x_cursor,y_cursor), line, font=font, fill=0)
 				y_cursor += font_size
+		index += 1
+
+	save_index(filepath, old_index)
 
 	# Progress bar
 	lst = os.listdir(filepath)
 	n_files = len(lst) - 1
-	progress = f"Page {index}/{n_files} - {str(round(100 * index/n_files, 2))} %"
-	progress_width = width * index / n_files
+	progress = f"Page {old_index}/{n_files} - {str(round(100 * old_index/n_files, 2))} %"
+	progress_width = width * old_index / n_files
 	font_small = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), font_size-5)
 	screen_buffer.rectangle((0,height-4,progress_width,height), fill=0)
 	screen_buffer.text((round(margins/2),height-font_size-round(margins/2)), progress, font=font_small, fill=0)
@@ -63,7 +75,6 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 	# Update screen
 	epd.display(epd.getbuffer(ScreenImage))
 	sleep_epd(epd)
-	save_index(filepath, old_index)
 	return extra_lines
 
 
@@ -79,47 +90,38 @@ def show_previous_screen(epd, x, y):
 
 logging.basicConfig(level=logging.DEBUG)
 try:
-    # Setup epaper display
+	# Setup epaper display
 	logging.info("init and Clear")
 	epd = epd7in5_V2.EPD()
 	clear_epd(epd)
-
-	# Parameters and variables
-	book = "1984"
-	filepath = "parsed_epubs/" + book
-	margins = 0
 	width = epd.width
 	height = epd.height
-	font_size = 25
-	paragraph_space = 5
-	n_button = 26
-	debounce_period = 0.2
-	font = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), font_size)
+
+	# Variables
+	book = "1984"
+	filepath = "parsed_epubs/" + book
 	x = margins
 	y = margins
 	index = load_index(filepath)
-	# index = 0
 	old_index = 0
 	extra_lines = ""
 
-	# Setup buttons
+	# Setup button
 	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(n_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.setup(button_bcm, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-	# while True:
-	# 	extra_lines = show_next_screen(epd, x, y, extra_lines)
-	# ScreenImage = Image.new("1", (width, height), 255)
+	# Open book
 	extra_lines = show_next_screen(epd, x, y)
 
 	while True:
 		double_click_event = False
 
-		if GPIO.input(n_button) == GPIO.HIGH:
+		if GPIO.input(button_bcm) == GPIO.HIGH:
 			t = time.time()
 			time.sleep(debounce_period)
 
 			while time.time() - t < (0.8 - debounce_period):
-				if GPIO.input(n_button) == GPIO.HIGH:
+				if GPIO.input(button_bcm) == GPIO.HIGH:
 					double_click_event = True
 
 			if double_click_event:

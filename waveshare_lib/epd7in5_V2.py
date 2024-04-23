@@ -45,15 +45,15 @@ class EPD:
         self.cs_pin = epdconfig.CS_PIN
         self.width = EPD_WIDTH
         self.height = EPD_HEIGHT
-    
+
     # Hardware reset
     def reset(self):
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(20) 
+        epdconfig.delay_ms(20)
         epdconfig.digital_write(self.reset_pin, 0)
         epdconfig.delay_ms(2)
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(20)   
+        epdconfig.delay_ms(20)
 
     def send_command(self, command):
         epdconfig.digital_write(self.dc_pin, 0)
@@ -82,19 +82,19 @@ class EPD:
             busy = epdconfig.digital_read(self.busy_pin)
         epdconfig.delay_ms(20)
         logger.debug("e-Paper busy release")
-        
+
     def init(self):
         if (epdconfig.module_init() != 0):
             return -1
         # EPD hardware init start
         self.reset()
-        
+
         self.send_command(0x06)     # btst
         self.send_data(0x17)
         self.send_data(0x17)
         self.send_data(0x28)        # If an exception is displayed, try using 0x38
         self.send_data(0x17)
-        
+
         self.send_command(0x01)			#POWER SETTING
         self.send_data(0x07)
         self.send_data(0x07)    #VGH=20V,VGL=-20V
@@ -126,13 +126,13 @@ class EPD:
 
         # EPD hardware init end
         return 0
-    
+
     def init_fast(self):
         if (epdconfig.module_init() != 0):
             return -1
         # EPD hardware init start
         self.reset()
-        
+
         self.send_command(0X00)			#PANNEL SETTING
         self.send_data(0x1F)   #KW-3f   KWR-2F	BWROTP 0f	BWOTP 1f
 
@@ -141,15 +141,15 @@ class EPD:
         self.send_data(0x07)
 
         self.send_command(0x04) #POWER ON
-        epdconfig.delay_ms(100) 
+        epdconfig.delay_ms(100)
         self.ReadBusy()        #waiting for the electronic paper IC to release the idle signal
 
         #Enhanced display drive(Add 0x06 command)
-        self.send_command(0x06)			#Booster Soft Start 
+        self.send_command(0x06)			#Booster Soft Start
         self.send_data (0x27)
-        self.send_data (0x27)   
-        self.send_data (0x18)		
-        self.send_data (0x17)		
+        self.send_data (0x27)
+        self.send_data (0x18)
+        self.send_data (0x17)
 
         self.send_command(0xE0)
         self.send_data(0x02)
@@ -158,7 +158,7 @@ class EPD:
 
         # EPD hardware init end
         return 0
-    
+
     def init_part(self):
         if (epdconfig.module_init() != 0):
             return -1
@@ -169,7 +169,7 @@ class EPD:
         self.send_data(0x1F)   #KW-3f   KWR-2F	BWROTP 0f	BWOTP 1f
 
         self.send_command(0x04) #POWER ON
-        epdconfig.delay_ms(100) 
+        epdconfig.delay_ms(100)
         self.ReadBusy()        #waiting for the electronic paper IC to release the idle signal
 
         self.send_command(0xE0)
@@ -240,10 +240,10 @@ class EPD:
                 Xend = Xend // 8 * 8
             else:
                 Xend = Xend // 8 * 8 + 1
-                
+
         Width = (Xend - Xstart) // 8
         Height = Yend - Ystart
-	
+
         self.send_command(0x50)
         self.send_data(0xA9)
         self.send_data(0x07)
@@ -251,15 +251,15 @@ class EPD:
         self.send_command(0x91)		#This command makes the display enter partial mode
         self.send_command(0x90)		#resolution setting
         self.send_data (Xstart//256)
-        self.send_data (Xstart%256)   #x-start    
+        self.send_data (Xstart%256)   #x-start
 
-        self.send_data ((Xend-1)//256)		
-        self.send_data ((Xend-1)%256)  #x-end	
+        self.send_data ((Xend-1)//256)
+        self.send_data ((Xend-1)%256)  #x-end
 
         self.send_data (Ystart//256)  #
-        self.send_data (Ystart%256)   #y-start    
+        self.send_data (Ystart%256)   #y-start
 
-        self.send_data ((Yend-1)//256)		
+        self.send_data ((Yend-1)//256)
         self.send_data ((Yend-1)%256)  #y-end
         self.send_data (0x01)
 
@@ -278,10 +278,10 @@ class EPD:
     def sleep(self):
         self.send_command(0x02) # POWER_OFF
         self.ReadBusy()
-        
+
         self.send_command(0x07) # DEEP_SLEEP
         self.send_data(0XA5)
-        
-        epdconfig.delay_ms(2000)
+
+        epdconfig.delay_ms(100)
         epdconfig.module_exit()
 ### END OF FILE ###
