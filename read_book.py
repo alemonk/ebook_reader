@@ -10,12 +10,12 @@ from utils import *
 
 # Parameters
 VERTICAL = False
-margins = 0
-font_size = 25
-paragraph_space = 5
-button_bcm = 26
-debounce_period = 0.2
-font = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), font_size)
+MARGINS = 0
+FONT_SIZE = 25
+PARAGRAPH_SPACE = 5
+BUTTOM_BCM = 26
+DEBOUNCE_PERIOD = 0.2
+FONT = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), FONT_SIZE)
 
 def get_content(i):
 	try:
@@ -37,29 +37,29 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 	epd.init_fast()
 	ScreenImage = Image.new("1", (width, height), 255)
 	screen_buffer = ImageDraw.Draw(ScreenImage)
-	text_height = height - 2 * margins - font_size
+	text_height = height - 2 * MARGINS - FONT_SIZE
 	extra_lines = []
 
 	if overflow_lines:
 		for _, line in enumerate(overflow_lines):
-			if y_cursor > text_height - font_size:
+			if y_cursor > text_height - FONT_SIZE:
 				extra_lines.append(line)
 			else:
 				# print(line)
-				screen_buffer.text((x_cursor,y_cursor), line, font=font, fill=0)
-				y_cursor += font_size
+				screen_buffer.text((x_cursor,y_cursor), line, font=FONT, fill=0)
+				y_cursor += FONT_SIZE
 
-	while y_cursor <= text_height - font_size:
-		y_cursor += paragraph_space
+	while y_cursor <= text_height - FONT_SIZE:
+		y_cursor += PARAGRAPH_SPACE
 		content = get_content(index)
-		lines = fit_text_within_screen(content, font, margins, width, font_size)
+		lines = fit_text_within_screen(content, FONT, MARGINS, width, FONT_SIZE)
 		for _, line in enumerate(lines):
-			if y_cursor > text_height - font_size:
+			if y_cursor > text_height - FONT_SIZE:
 				extra_lines.append(line)
 			else:
 				# print(line)
-				screen_buffer.text((x_cursor,y_cursor), line, font=font, fill=0)
-				y_cursor += font_size
+				screen_buffer.text((x_cursor,y_cursor), line, font=FONT, fill=0)
+				y_cursor += FONT_SIZE
 		index += 1
 
 	save_index(filepath, old_index)
@@ -69,9 +69,9 @@ def show_next_screen(epd, x_cursor, y_cursor, overflow_lines=""):
 	n_files = len(lst) - 1
 	progress = f"Page {old_index}/{n_files} - {str(round(100 * old_index/n_files, 2))} %"
 	progress_width = width * old_index / n_files
-	font_small = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), font_size-5)
+	font_small = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), FONT_SIZE-5)
 	screen_buffer.rectangle((0,height-4,progress_width,height), fill=0)
-	screen_buffer.text((round(margins/2),height-font_size-round(margins/2)), progress, font=font_small, fill=0)
+	screen_buffer.text((round(MARGINS/2),height-FONT_SIZE-round(MARGINS/2)), progress, font=font_small, fill=0)
 
 	# Update screen
 	epd.display(epd.getbuffer(ScreenImage))
@@ -101,15 +101,15 @@ try:
 	# Variables
 	book = get_book_name()
 	filepath = "parsed_epubs/" + book
-	x = margins
-	y = margins
+	x = MARGINS
+	y = MARGINS
 	index = load_index(filepath)
 	old_index = 0
 	extra_lines = ""
 
 	# Setup button
 	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(button_bcm, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.setup(BUTTOM_BCM, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 	# Open book
 	extra_lines = show_next_screen(epd, x, y)
@@ -117,12 +117,12 @@ try:
 	while True:
 		double_click_event = False
 
-		if GPIO.input(button_bcm) == GPIO.HIGH:
+		if GPIO.input(BUTTOM_BCM) == GPIO.HIGH:
 			t = time.time()
-			time.sleep(debounce_period)
+			time.sleep(DEBOUNCE_PERIOD)
 
-			while time.time() - t < (0.8 - debounce_period):
-				if GPIO.input(button_bcm) == GPIO.HIGH:
+			while time.time() - t < (0.8 - DEBOUNCE_PERIOD):
+				if GPIO.input(BUTTOM_BCM) == GPIO.HIGH:
 					double_click_event = True
 
 			if double_click_event:
