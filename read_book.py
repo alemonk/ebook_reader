@@ -27,10 +27,10 @@ class EBookReader:
 
 	def store_content(self):
 		for i in os.listdir(self.filepath):
-                        full_path = os.path.join(self.filepath, i)
-                        if os.path.isfile(full_path):
-                                with open(full_path, "r") as file:
-                                        self.contents[i] = file.read()
+			full_path = os.path.join(self.filepath, i)
+			if os.path.isfile(full_path):
+				with open(full_path, "r") as file:
+						self.contents[i] = file.read()
 
 	def get_content(self, i):
 		content = self.contents.get(f"{i}.txt")
@@ -41,8 +41,10 @@ class EBookReader:
 			print(f"Opening file {i}")
 		return content
 
-	def show_next_screen(self, epd, x_cursor, y_cursor, overflow_lines=""):
+	def show_next_screen(self, epd, overflow_lines=""):
 		self.old_index = self.index
+		x_cursor = self.MARGINS
+		y_cursor = self.MARGINS
 
 		epd.init_fast()
 		ScreenImage = Image.new("1", (self.width, self.height), 255)
@@ -88,11 +90,11 @@ class EBookReader:
 		sleep_epd(epd)
 		return extra_lines
 
-	def show_previous_screen(self, epd, x, y):
+	def show_previous_screen(self, epd):
 		self.index = self.old_index - 1
 		if self.index <= 0:
 			self.index = 1
-		return self.show_next_screen(epd, x, y)
+		return self.show_next_screen(epd)
 
 
 if __name__ == "__main__":
@@ -109,8 +111,6 @@ if __name__ == "__main__":
 		# Variables
 		book = get_book_name()
 		reader.filepath = "parsed_epubs/" + book
-		x = reader.MARGINS
-		y = reader.MARGINS
 		reader.index = load_index(reader.filepath)
 		reader.old_index = 0
 		extra_lines = ""
@@ -121,7 +121,7 @@ if __name__ == "__main__":
 
 		# Open book
 		reader.store_content()
-		extra_lines = reader.show_next_screen(epd, x, y)
+		extra_lines = reader.show_next_screen(epd)
 
 		while True:
 			double_click_event = False
@@ -136,10 +136,10 @@ if __name__ == "__main__":
 
 				if double_click_event:
 					print_highlight("Previous page")
-					extra_lines = reader.show_previous_screen(epd, x, y)
+					extra_lines = reader.show_previous_screen(epd)
 				else:
 					print_highlight("Next page")
-					extra_lines = reader.show_next_screen(epd, x, y, extra_lines)
+					extra_lines = reader.show_next_screen(epd, extra_lines)
 			time.sleep(0.25)
 
 	except Exception as e:
@@ -152,3 +152,4 @@ if __name__ == "__main__":
 		GPIO.cleanup()
 		epd7in5_V2.epdconfig.module_exit(cleanup=True)
 		exit()
+
