@@ -23,15 +23,22 @@ class EBookReader:
 		self.book = ""
 		self.width = 0
 		self.height = 0
+		self.contents = {}
+
+	def store_content(self):
+		for i in os.listdir(self.filepath):
+                        full_path = os.path.join(self.filepath, i)
+                        if os.path.isfile(full_path):
+                                with open(full_path, "r") as file:
+                                        self.contents[i] = file.read()
 
 	def get_content(self, i):
-		try:
-			with open(os.path.join(f"{self.filepath}", f"{i}.txt"), "r") as file:
-				content = file.read()
-			print(f"Opening file {i}")
-		except FileNotFoundError:
+		content = self.contents.get(f"{i}.txt")
+		if content is None:
 			content = "E N D O F C O N T E N T " * 50
 			print(f"File {i} not found, returning default content")
+		else:
+			print(f"Opening file {i}")
 		return content
 
 	def show_next_screen(self, epd, x_cursor, y_cursor, overflow_lines=""):
@@ -113,6 +120,7 @@ if __name__ == "__main__":
 		GPIO.setup(reader.BUTTOM_BCM, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 		# Open book
+		reader.store_content()
 		extra_lines = reader.show_next_screen(epd, x, y)
 
 		while True:

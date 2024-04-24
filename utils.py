@@ -66,7 +66,7 @@ def fit_text_within_screen(text, font, margins, width, font_size):
 
 
 def load_index(filepath):
-    index_file = os.path.join(filepath, "index.txt")
+    index_file = os.path.join(f"{filepath}/meta", "index.txt")
     if os.path.exists(index_file):
         print("Loading existing index")
         with open(index_file, 'r') as file:
@@ -76,7 +76,9 @@ def load_index(filepath):
 
 
 def save_index(filepath, old_index):
-    index_file = os.path.join(filepath, "index.txt")
+    meta_dir = os.path.join(filepath, "meta")
+    os.makedirs(meta_dir, exist_ok=True)  # Create the directory if it does not exist
+    index_file = os.path.join(meta_dir, "index.txt")
     fd = os.open(index_file, os.O_WRONLY | os.O_CREAT, 0o644)
     with os.fdopen(fd, "w") as file:
         json.dump(old_index, file)
