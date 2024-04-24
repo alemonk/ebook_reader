@@ -132,6 +132,7 @@ if __name__ == "__main__":
 				else:
 					print_highlight("Next page")
 					extra_lines = reader.show_next_screen(epd, x, y, extra_lines)
+			time.sleep(0.25)
 
 	except Exception as e:
 		logging.info(e)
