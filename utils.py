@@ -6,9 +6,9 @@ import logging
 import argparse
 from waveshare_lib import epd7in5_V2
 from PIL import Image,ImageDraw,ImageFont
-import RPi.GPIO as GPIO
 picdir = os.path.join("waveshare_lib/pic")
 import time
+import textwrap
 
 def print_highlight(text):
     print('\n')
@@ -46,8 +46,12 @@ def fit_text_within_screen(text, font, margins, width, font_size):
     lines = []
     text_width = width - 2 * margins - font_size/2 # Added font_size/2 to prevent overshoot if margins are tiny
     paragraphs = text.split('\n') # Split the text by new lines first
+    wrapper_width = 70
 
     for paragraph in paragraphs:
+        # wrapped_paragraph = textwrap.wrap(paragraph, width=wrapper_width)
+        # lines.extend(wrapped_paragraph)
+
         line = ""
         first_word = True
         for word in paragraph.split(): # Then split each paragraph by spaces

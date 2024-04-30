@@ -14,7 +14,7 @@ class EBookReader:
 		self.FONT_SIZE = 25
 		self.PARAGRAPH_SPACE = 5
 		self.BUTTOM_BCM = 26
-		self.DEBOUNCE_PERIOD = 0.2
+		self.DEBOUNCE_PERIOD = 0.3
 		self.picdir = os.path.join("waveshare_lib/pic")
 		self.FONT = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE)
 		self.index = 0
@@ -41,6 +41,13 @@ class EBookReader:
 		else:
 			print(f"Opening file {i}")
 		return content
+	
+	# def button_pressed_animation(self):
+	# 	epd.init_part()
+	# 	Himage = Image.new('1', (epd.width, epd.height), 0)
+	# 	draw = ImageDraw.Draw(Himage)
+	# 	draw.rectangle((self.width-10, self.height-10, self.width, self.height), fill = 255)
+	# 	epd.display_Partial(epd.getbuffer(Himage),0, 0, self.width, self.height)
 
 	def show_next_screen(self, epd, overflow_lines=""):
 		self.old_index = self.index
@@ -59,7 +66,7 @@ class EBookReader:
 					extra_lines.append(line)
 				else:
 					# print(line)
-					screen_buffer.multiline_text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
+					screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
 					y_cursor += self.FONT_SIZE
 
 		while y_cursor <= text_height - self.FONT_SIZE:
@@ -71,7 +78,7 @@ class EBookReader:
 					extra_lines.append(line)
 				else:
 					# print(line)
-					screen_buffer.multiline_text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
+					screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
 					y_cursor += self.FONT_SIZE
 			self.index += 1
 
@@ -130,17 +137,18 @@ if __name__ == "__main__":
 			if GPIO.input(reader.BUTTOM_BCM) == GPIO.HIGH:
 				t = time.time()
 				time.sleep(reader.DEBOUNCE_PERIOD)
-
-				while time.time() - t < (0.5 - reader.DEBOUNCE_PERIOD):
+				while time.time() - t < (0.8 - reader.DEBOUNCE_PERIOD):
 					if GPIO.input(reader.BUTTOM_BCM) == GPIO.HIGH:
 						double_click_event = True
-
 				if double_click_event:
 					print_highlight("Previous page")
 					extra_lines = reader.show_previous_screen(epd)
 				else:
 					print_highlight("Next page")
 					extra_lines = reader.show_next_screen(epd, extra_lines)
+
+				# print_highlight("Next page")
+				# extra_lines = reader.show_next_screen(epd, extra_lines)
 			time.sleep(0.25)
 
 	except Exception as e:
