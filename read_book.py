@@ -42,12 +42,12 @@ class EBookReader:
 			print(f"Opening file {i}")
 		return content
 	
-	# def button_pressed_animation(self):
-	# 	epd.init_part()
-	# 	Himage = Image.new('1', (epd.width, epd.height), 0)
-	# 	draw = ImageDraw.Draw(Himage)
-	# 	draw.rectangle((self.width-10, self.height-10, self.width, self.height), fill = 255)
-	# 	epd.display_Partial(epd.getbuffer(Himage),0, 0, self.width, self.height)
+	def button_pressed_animation(self):
+		epd.init_part()
+		Himage = Image.new('1', (epd.width, epd.height), 0)
+		draw = ImageDraw.Draw(Himage)
+		draw.rectangle((self.width-10, self.height-10, self.width, self.height), fill = 255)
+		epd.display_Partial(epd.getbuffer(Himage),0, 0, self.width, self.height)
 
 	def show_next_screen(self, epd, overflow_lines=""):
 		self.old_index = self.index
@@ -72,7 +72,7 @@ class EBookReader:
 		while y_cursor <= text_height - self.FONT_SIZE:
 			y_cursor += self.PARAGRAPH_SPACE
 			content = self.get_content(self.index)
-			lines = fit_text_within_screen(content, self.FONT, self.MARGINS, self.width, self.FONT_SIZE)
+			lines = fit_text_within_screen(content, self.FONT, self.MARGINS, self.width, self.FONT_SIZE, self.filepath)
 			for _, line in enumerate(lines):
 				if y_cursor > text_height - self.FONT_SIZE:
 					extra_lines.append(line)
@@ -135,6 +135,7 @@ if __name__ == "__main__":
 			double_click_event = False
 
 			if GPIO.input(reader.BUTTOM_BCM) == GPIO.HIGH:
+				# reader.button_pressed_animation()
 				t = time.time()
 				time.sleep(reader.DEBOUNCE_PERIOD)
 				while time.time() - t < (0.8 - reader.DEBOUNCE_PERIOD):
