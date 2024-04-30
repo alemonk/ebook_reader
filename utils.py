@@ -43,26 +43,25 @@ def sleep_epd(epd):
 
 
 def fit_text_within_screen(text, font, margins, width, font_size):
-	lines = []
-	line = ""
-	text_width = width - 2 * margins - font_size/2 # Added font_size/2 to prevent overshoot if margins are tiny
-	first_word = True
-	for word in text.split():
-		if first_word:
-			word = "    " + word
-			first_word = False
-		if word != "__newline__":
-			word_width = font.getbbox(word)[2]
-			if word_width + font.getbbox(line)[2] > text_width:
-				lines.append(line)
-				line = word
-			else:
-				line = line + " " + word if line else word
-		else:
-			lines.append(line)
-			line = ""
-	lines.append(line)
-	return lines
+    lines = []
+    text_width = width - 2 * margins - font_size/2 # Added font_size/2 to prevent overshoot if margins are tiny
+    paragraphs = text.split('\n') # Split the text by new lines first
+
+    for paragraph in paragraphs:
+        line = ""
+        first_word = True
+        for word in paragraph.split(): # Then split each paragraph by spaces
+            if first_word:
+                word = "    " + word
+                first_word = False
+            word_width = font.getbbox(word)[2]
+            if word_width + font.getbbox(line)[2] > text_width:
+                lines.append(line)
+                line = word
+            else:
+                line = line + " " + word if line else word
+        lines.append(line) # Append the last line of each paragraph
+    return lines
 
 
 def load_index(filepath):

@@ -5,6 +5,7 @@ import time
 from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 from utils import *
+import textwrap
 
 class EBookReader:
 	def __init__(self):
@@ -58,7 +59,7 @@ class EBookReader:
 					extra_lines.append(line)
 				else:
 					# print(line)
-					screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
+					screen_buffer.multiline_text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
 					y_cursor += self.FONT_SIZE
 
 		while y_cursor <= text_height - self.FONT_SIZE:
@@ -70,7 +71,7 @@ class EBookReader:
 					extra_lines.append(line)
 				else:
 					# print(line)
-					screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
+					screen_buffer.multiline_text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
 					y_cursor += self.FONT_SIZE
 			self.index += 1
 
