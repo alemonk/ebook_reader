@@ -6,22 +6,22 @@ import logging
 import argparse
 from waveshare_lib import epd7in5_V2
 from PIL import Image,ImageDraw,ImageFont
-import RPi.GPIO as GPIO
 picdir = os.path.join("waveshare_lib/pic")
 import time
+import textwrap
 
 def print_highlight(text):
-    print('\n')
-    print('-----------------------------------------------------------------------------')
-    print('--------\t' + text)
+    print("\n")
+    print("-----------------------------------------------------------------------------")
+    print("--------\t" + text)
     print()
 
 
 def get_book_name():
-	parser = argparse.ArgumentParser(description='Read a book.')
-	parser.add_argument('-b', '--book',
+	parser = argparse.ArgumentParser(description="Read a book.")
+	parser.add_argument("-b", "--book",
                     type=str,
-                    help='The name of the book to read')
+                    help="The name of the book to read")
 
 	args = parser.parse_args()
 	if args.book:
@@ -42,34 +42,49 @@ def sleep_epd(epd):
 	print("Ready")
 
 
-def fit_text_within_screen(text, font, margins, width, font_size):
-	lines = []
-	line = ""
-	text_width = width - 2 * margins - font_size/2 # Added font_size/2 to prevent overshoot if margins are tiny
-	first_word = True
-	for word in text.split():
-		if first_word:
-			word = "    " + word
-			first_word = False
-		if word != "__newline__":
-			word_width = font.getbbox(word)[2]
-			if word_width + font.getbbox(line)[2] > text_width:
-				lines.append(line)
-				line = word
-			else:
-				line = line + " " + word if line else word
-		else:
-			lines.append(line)
-			line = ""
-	lines.append(line)
-	return lines
+def fit_text_within_screen(text, font, margins, width, font_size, filepath):
+    lines = []
+    text_width = width - 2 * margins - font_size/2
+    paragraphs = text.split("\n")
+
+    # Load word widths from file
+    try:
+        with open(f"{filepath}/meta/word_widths.json", "r") as f:
+            word_widths = json.load(f)
+    except FileNotFoundError:
+        word_widths = {}
+
+    for paragraph in paragraphs:
+        words_per_line = 0
+        line = ""
+        first_word = True
+        for word in paragraph.split():
+            if first_word:
+                word = "    " + word
+                first_word = False
+            if word not in word_widths:
+                word_widths[word] = font.getbbox(word)[2]
+            if word_widths[word] + (font.getbbox(line)[2] if line else 0) > text_width:
+                lines.append(line)
+                line = word
+                words_per_line = 0
+            else:
+                words_per_line += 1
+                line = line + " " + word if line else word
+        lines.append(line)
+
+    # Save word widths to file
+    with open(f"{filepath}/meta/word_widths.json", "w") as f:
+        json.dump(word_widths, f)
+
+    return lines
 
 
 def load_index(filepath):
     index_file = os.path.join(f"{filepath}/meta", "index.txt")
     if os.path.exists(index_file):
         print("Loading existing index")
-        with open(index_file, 'r') as file:
+        with open(index_file, "r") as file:
             return json.load(file)
     else:
         return 1  # Default index

@@ -23,7 +23,8 @@ try:
 
                 # Handle <br/> tags
                 for br in p.find_all("br"):
-                    br.replace_with("__newline__ ")
+                    # br.replace_with("__newline__ ")
+                    br.replace_with("\n")
 
                 # Write the class and the content of the <p> element to a text file
                 with open(f"parsed_epubs/{BOOK}/{counter}.txt", "w") as f:
