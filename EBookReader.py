@@ -38,12 +38,13 @@ class EBookReader:
             print(f"Opening file {i}")
         return content
         
-    def button_pressed_animation(self, ScreenImage):
-        self.epd.init_part()
+    def button_pressed_animation(self, ScreenImage, text):
+        self.epd.init_fast()
         draw = ImageDraw.Draw(ScreenImage)
-        draw.rectangle((0, 0, self.width, self.height), fill = 255)
-        text = "Changing Page"
-        draw.text((0, 0), text, font=self.FONT, fill=0)
+        text_length = draw.textlength(text, font=self.FONT)
+        left, top, right, bottom = self.width-text_length, self.height-self.FONT_SIZE, self.width, self.height
+        draw.rectangle((left, top, right, bottom), fill=255)
+        draw.text((left, top), text, font=self.FONT, fill=0)
         self.epd.display_Partial(self.epd.getbuffer(ScreenImage), 0, 0, self.width, self.height)
 
     def show_next_screen(self, epd, overflow_lines=""):

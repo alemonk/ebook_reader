@@ -38,8 +38,6 @@ if __name__ == "__main__":
 			double_click_event = False
 
 			if GPIO.input(reader.BUTTOM_BCM) == GPIO.HIGH:
-				# reader.button_pressed_animation(ScreenImage)
-
 				t = time.time()
 				time.sleep(reader.DEBOUNCE_PERIOD)
 				while time.time() - t < (0.8 - reader.DEBOUNCE_PERIOD):
@@ -47,9 +45,11 @@ if __name__ == "__main__":
 						double_click_event = True
 				if double_click_event:
 					print_highlight("Previous page")
+					reader.button_pressed_animation(ScreenImage, text="Previous page")
 					extra_lines, ScreenImage = reader.show_previous_screen(epd)
 				else:
 					print_highlight("Next page")
+					reader.button_pressed_animation(ScreenImage, text="Next page")
 					extra_lines, ScreenImage = reader.show_next_screen(epd, extra_lines)
 
 				# print_highlight("Next page")
