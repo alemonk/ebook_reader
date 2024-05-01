@@ -9,6 +9,8 @@ from PIL import Image,ImageDraw,ImageFont
 picdir = os.path.join("waveshare_lib/pic")
 import time
 import textwrap
+import tempfile
+import shutil
 
 def print_highlight(text):
     print("\n")
@@ -98,9 +100,17 @@ def save_index(filepath, old_index):
     meta_dir = os.path.join(filepath, "meta")
     os.makedirs(meta_dir, exist_ok=True)  # Create the directory if it does not exist
     index_file = os.path.join(meta_dir, "index.txt")
-    fd = os.open(index_file, os.O_WRONLY | os.O_CREAT, 0o644)
-    with os.fdopen(fd, "w") as file:
-        json.dump(old_index, file)
+    temp_file = tempfile.NamedTemporaryFile(delete=False)
+
+    try:
+        with open(temp_file.name, 'w') as file:
+            json.dump(old_index, file)
+            file.flush()  # Flush the buffer
+            os.fsync(file.fileno())  # Force write to disk
+    except Exception as e:
+        print(f"Error while writing to temporary file: {e}")
+    else:
+        shutil.move(temp_file.name, index_file)  # Replace the old file with the new file
 
 
 def error_screen(err):
