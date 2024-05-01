@@ -42,10 +42,11 @@ def sleep_epd(epd):
 	print("Ready")
 
 
-def fit_text_within_screen(text, font, margins, width, font_size, filepath):
+def fit_text_within_screen(text, font, margins, width, font_size, filepath, fast_mode):
     lines = []
     text_width = width - 2 * margins - font_size/2
     paragraphs = text.split("\n")
+    wrapper_width = 65
 
     # Load word widths from file
     try:
@@ -55,23 +56,24 @@ def fit_text_within_screen(text, font, margins, width, font_size, filepath):
         word_widths = {}
 
     for paragraph in paragraphs:
-        words_per_line = 0
-        line = ""
-        first_word = True
-        for word in paragraph.split():
-            if first_word:
-                word = "    " + word
-                first_word = False
-            if word not in word_widths:
-                word_widths[word] = font.getbbox(word)[2]
-            if word_widths[word] + (font.getbbox(line)[2] if line else 0) > text_width:
-                lines.append(line)
-                line = word
-                words_per_line = 0
-            else:
-                words_per_line += 1
-                line = line + " " + word if line else word
-        lines.append(line)
+        if fast_mode:
+            wrapped_paragraph = textwrap.wrap(paragraph, width=wrapper_width)
+            lines.extend(wrapped_paragraph)
+        else:
+            line = ""
+            first_word = True
+            for word in paragraph.split():
+                if first_word:
+                    word = "    " + word
+                    first_word = False
+                if word not in word_widths:
+                    word_widths[word] = font.getbbox(word)[2]
+                if word_widths[word] + (font.getbbox(line)[2] if line else 0) > text_width:
+                    lines.append(line)
+                    line = word
+                else:
+                    line = line + " " + word if line else word
+            lines.append(line)
 
     # Save word widths to file
     with open(f"{filepath}/meta/word_widths.json", "w") as f:

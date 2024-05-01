@@ -4,14 +4,18 @@ from utils import *
 
 class EBookReader:
     def __init__(self, epd):
+        # Parameters
         self.VERTICAL = False
+        self.FAST_MODE = True
         self.MARGINS = 0
         self.FONT_SIZE = 25
         self.PARAGRAPH_SPACE = 5
         self.BUTTOM_BCM = 26
         self.DEBOUNCE_PERIOD = 0.3
+
         self.picdir = os.path.join("waveshare_lib/pic")
         self.FONT = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE)
+        self.font_small = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE-5)
         self.index = 0
         self.old_index = 0
         self.extra_lines = ""
@@ -37,14 +41,14 @@ class EBookReader:
         else:
             print(f"Opening file {i}")
         return content
-        
+
     def button_pressed_animation(self, ScreenImage, text):
         self.epd.init_fast()
         draw = ImageDraw.Draw(ScreenImage)
         text_length = draw.textlength(text, font=self.FONT)
         left, top, right, bottom = self.width-text_length, self.height-self.FONT_SIZE, self.width, self.height
         draw.rectangle((left, top, right, bottom), fill=255)
-        draw.text((left, top), text, font=self.FONT, fill=0)
+        draw.text((left, top), text, font=self.font_small, fill=0)
         self.epd.display_Partial(self.epd.getbuffer(ScreenImage), 0, 0, self.width, self.height)
 
     def show_next_screen(self, epd, overflow_lines=""):
@@ -70,7 +74,13 @@ class EBookReader:
         while y_cursor <= text_height - self.FONT_SIZE:
             y_cursor += self.PARAGRAPH_SPACE
             content = self.get_content(self.index)
-            lines = fit_text_within_screen(content, self.FONT, self.MARGINS, self.width, self.FONT_SIZE, self.filepath)
+            lines = fit_text_within_screen(text=content,
+                                           font=self.FONT,
+                                           margins=self.MARGINS,
+                                           width=self.width,
+                                           font_size=self.FONT_SIZE,
+                                           filepath=self.filepath,
+                                           fast_mode=self.FAST_MODE)
             for _, line in enumerate(lines):
                 if y_cursor > text_height - self.FONT_SIZE:
                     extra_lines.append(line)
@@ -87,9 +97,8 @@ class EBookReader:
         n_files = len(lst) - 1
         progress = f"Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} %"
         progress_width = self.width * self.old_index / n_files
-        font_small = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE-5)
         screen_buffer.rectangle((0, self.height-4, progress_width, self.height), fill=0)
-        screen_buffer.text((round(self.MARGINS/2), self.height-self.FONT_SIZE-round(self.MARGINS/2)), progress, font=font_small, fill=0)
+        screen_buffer.text((round(self.MARGINS/2), self.height-self.FONT_SIZE-round(self.MARGINS/2)), progress, font=self.font_small, fill=0)
 
         # Update screen
         epd.display(epd.getbuffer(ScreenImage))
