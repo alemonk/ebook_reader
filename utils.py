@@ -49,6 +49,8 @@ def fit_text_within_screen(text, font, margins, width, font_size, filepath, fast
     wrapper_width = 65
 
     # Load word widths from file
+    meta_dir = os.path.join(filepath, "meta")
+    os.makedirs(meta_dir, exist_ok=True)  # Create the directory if it does not exist
     try:
         with open(f"{filepath}/meta/word_widths.json", "r") as f:
             word_widths = json.load(f)
@@ -57,7 +59,7 @@ def fit_text_within_screen(text, font, margins, width, font_size, filepath, fast
 
     for paragraph in paragraphs:
         if fast_mode:
-            wrapped_paragraph = textwrap.wrap(paragraph, width=wrapper_width)
+            wrapped_paragraph = textwrap.wrap(paragraph, width=wrapper_width, initial_indent="    ")
             lines.extend(wrapped_paragraph)
         else:
             line = ""
