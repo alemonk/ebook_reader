@@ -1,7 +1,7 @@
 waveshare_lib/__pycache__/
-waveshare_lib/pic/
+waveshare_lib/pic/.DS_Store
 __pycache__/
 epubs/
 parsed_epubs/
 pyenv/
-
+.DS_Store
