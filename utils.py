@@ -150,12 +150,12 @@ def get_closest_heading(index, filepath):
 
     if not possible_headings:
         return "Last Chapter"
-    
+
     closest_heading_index = min(possible_headings)
     left_paragraphs = closest_heading_index - index
     next_paragraph = headings[closest_heading_index]["text"]
 
-    return f"{left_paragraphs} paragraphs until {next_paragraph}"
+    return f"{left_paragraphs} until {next_paragraph}"
 
 
 # class ContentFormatter:
