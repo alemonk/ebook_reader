@@ -7,11 +7,11 @@ class EBookReader:
         # Parameters
         self.VERTICAL = False
         self.FAST_MODE = True
+        self.PROGRESS_BAR = True
         self.MARGINS = 0
         self.FONT_SIZE = 25
         self.PARAGRAPH_SPACE = 5
         self.BUTTOM_BCM = 26
-        self.DEBOUNCE_PERIOD = 0.3
 
         self.picdir = os.path.join("waveshare_lib/pic")
         self.FONT = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE)
@@ -92,14 +92,15 @@ class EBookReader:
 
         save_index(self.filepath, self.old_index)
 
-        # Progress bar
-        lst = os.listdir(self.filepath)
-        n_files = len(lst) - 1
-        progress = f"Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} % - {get_closest_heading(index=self.index, filepath=self.filepath)}"
-        progress_width = self.width * self.old_index / n_files
-        screen_buffer.line((0,self.height-self.FONT_SIZE-round(self.MARGINS), self.width, self.height-self.FONT_SIZE-round(self.MARGINS)),fill=0)
-        screen_buffer.rectangle((0, self.height-4, progress_width, self.height), fill=0)
-        screen_buffer.text((round(self.MARGINS), self.height-self.FONT_SIZE-round(self.MARGINS)), progress, font=self.font_small, fill=0)
+        if self.PROGRESS_BAR:
+	        # Progress bar
+        	lst = os.listdir(self.filepath)
+        	n_files = len(lst) - 1
+	        progress = f"Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} % - {get_closest_heading(index=self.index, filepath=self.filepath)}"
+        	progress_width = self.width * self.old_index / n_files
+        	screen_buffer.line((0,self.height-self.FONT_SIZE-round(self.MARGINS), self.width, self.height-self.FONT_SIZE-round(self.MARGINS)),fill=0)
+        	screen_buffer.rectangle((0, self.height-4, progress_width, self.height), fill=0)
+        	screen_buffer.text((round(self.MARGINS), self.height-self.FONT_SIZE-round(self.MARGINS)), progress, font=self.font_small, fill=0)
 
         # Update screen
         epd.display(epd.getbuffer(ScreenImage))

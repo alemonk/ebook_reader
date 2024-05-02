@@ -39,8 +39,8 @@ if __name__ == "__main__":
 
 			if GPIO.input(reader.BUTTOM_BCM) == GPIO.HIGH:
 				t = time.time()
-				time.sleep(reader.DEBOUNCE_PERIOD)
-				while time.time() - t < (0.8 - reader.DEBOUNCE_PERIOD):
+				time.sleep(0.3)
+				while time.time() - t < (0.8 - 0.3):
 					if GPIO.input(reader.BUTTOM_BCM) == GPIO.HIGH:
 						double_click_event = True
 				if double_click_event:
