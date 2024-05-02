@@ -55,7 +55,6 @@ def fit_text_within_screen(text, font, margins, width, font_size, filepath, fast
     lines = []
     text_width = width - 2 * margins - font_size/2
     paragraphs = text.split("\n")
-    wrapper_width = text_width / average_font_width(font)
 
     # Load word widths from file
     meta_dir = os.path.join(filepath, "meta")
@@ -68,6 +67,7 @@ def fit_text_within_screen(text, font, margins, width, font_size, filepath, fast
 
     for paragraph in paragraphs:
         if fast_mode:
+            wrapper_width = text_width / average_font_width(font)
             wrapped_paragraph = textwrap.wrap(paragraph, width=wrapper_width, initial_indent="    ")
             lines.extend(wrapped_paragraph)
         else:
