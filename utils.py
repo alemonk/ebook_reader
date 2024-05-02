@@ -140,6 +140,24 @@ def error_screen(err):
         time.sleep(1984)
 
 
+def get_closest_heading(index, filepath):
+    headings_file = os.path.join(f"{filepath}/meta", "headings.json")
+    with open(headings_file, "r") as f:
+        headings = json.load(f)
+
+    headings = {int(k): v for k, v in headings.items()}
+    possible_headings = [i for i in headings if i > index]
+
+    if not possible_headings:
+        return "Last Chapter"
+    
+    closest_heading_index = min(possible_headings)
+    left_paragraphs = closest_heading_index - index
+    next_paragraph = headings[closest_heading_index]["text"]
+
+    return f"{left_paragraphs} paragraphs until {next_paragraph}"
+
+
 # class ContentFormatter:
 #     def __init__(self):
 #         self.last_class_type = None

@@ -95,10 +95,11 @@ class EBookReader:
         # Progress bar
         lst = os.listdir(self.filepath)
         n_files = len(lst) - 1
-        progress = f"Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} %"
+        progress = f"Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} % - {get_closest_heading(index=self.index, filepath=self.filepath)}"
         progress_width = self.width * self.old_index / n_files
+        screen_buffer.line((0,self.height-self.FONT_SIZE-round(self.MARGINS), self.width, self.height-self.FONT_SIZE-round(self.MARGINS)),fill=0)
         screen_buffer.rectangle((0, self.height-4, progress_width, self.height), fill=0)
-        screen_buffer.text((round(self.MARGINS/2), self.height-self.FONT_SIZE-round(self.MARGINS/2)), progress, font=self.font_small, fill=0)
+        screen_buffer.text((round(self.MARGINS), self.height-self.FONT_SIZE-round(self.MARGINS)), progress, font=self.font_small, fill=0)
 
         # Update screen
         epd.display(epd.getbuffer(ScreenImage))
