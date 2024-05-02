@@ -45,7 +45,8 @@ def sleep_epd(epd):
 
 
 def average_font_width(font):
-    characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.;-.°#~`!@#$%^&*()_+{}[]|\\:\"<>?/'"
+    characters = " abcdefghijklmnopqrstuvwxyz"
+    # characters = " abcdefghijklmnopqrstuvwxyz,.;-...°#~`!@#$%^&*()_+{}[]|\\:\"<>?/'"
     width = font.getlength(characters)
     return width / len(characters)
 
@@ -54,7 +55,7 @@ def fit_text_within_screen(text, font, margins, width, font_size, filepath, fast
     lines = []
     text_width = width - 2 * margins - font_size/2
     paragraphs = text.split("\n")
-    wrapper_width = width / average_font_width(font)
+    wrapper_width = text_width / average_font_width(font)
 
     # Load word widths from file
     meta_dir = os.path.join(filepath, "meta")

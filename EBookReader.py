@@ -14,7 +14,9 @@ class EBookReader:
         self.BUTTOM_BCM = 26
 
         self.picdir = os.path.join("waveshare_lib/pic")
-        self.FONT = ImageFont.truetype(os.path.join(self.picdir, "RobotoMono-ExtraLight.ttf"), self.FONT_SIZE)
+        self.FONT = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE)
+        # self.FONT = ImageFont.truetype(os.path.join(self.picdir, "RobotoMono-Regular.ttf"), self.FONT_SIZE)
+        # self.FONT = ImageFont.truetype(os.path.join(self.picdir, "RobotoMono-Medium.ttf"), self.FONT_SIZE)
         self.font_small = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE-5)
         self.index = 0
         self.old_index = 0
