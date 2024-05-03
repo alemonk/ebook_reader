@@ -1,29 +1,8 @@
 import logging
 from waveshare_lib import epd7in5_V2
-import time
 import RPi.GPIO as GPIO
 from utils import *
 from EBookReader import EBookReader
-
-def handle_switch(reader, ScreenImage):
-	switch_state = GPIO.input(reader.BUTTOM_BCM)
-	double_switch_event = False
-
-	if switch_state != reader.last_switch_state:
-		t = time.time()
-		while time.time() - t < 0.8:
-			if GPIO.input(reader.BUTTOM_BCM) != switch_state:
-				double_switch_event = True
-		if double_switch_event:
-			print_highlight("Previous page")
-			ScreenImage = reader.show_previous_screen(epd)
-		else:
-			print_highlight("Next page")
-			ScreenImage = reader.show_next_screen(epd)
-
-	reader.last_switch_state = GPIO.input(reader.BUTTOM_BCM)
-	time.sleep(0.25)
-	return ScreenImage
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
@@ -46,14 +25,15 @@ if __name__ == "__main__":
 
         # Setup button
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(reader.BUTTOM_BCM, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(reader.SWITCH_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        reader.set_initial_switch_state()
 
         # Open book
         reader.store_content()
-        ScreenImage = reader.show_next_screen(epd)
+        # ScreenImage = reader.show_next_screen(epd)
 
         while True:
-            ScreenImage = handle_switch(reader, ScreenImage)
+            handle_switch(reader, epd)
 
     except Exception as e:
         logging.info(e)

@@ -11,7 +11,7 @@ class EBookReader:
         self.MARGINS = 0
         self.FONT_SIZE = 25
         self.PARAGRAPH_SPACE = 5
-        self.BUTTOM_BCM = 26
+        self.SWITCH_GPIO = 26
 
         self.picdir = os.path.join("waveshare_lib/pic")
         self.FONT = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE)
@@ -28,13 +28,16 @@ class EBookReader:
         self.epd = epd
         self.extra_lines = []
         self.last_switch_state = 0
+    
+    def set_initial_switch_state(self):
+        get_switch_state(self.SWITCH_GPIO)
 
     def store_content(self):
         for i in os.listdir(self.filepath):
             full_path = os.path.join(self.filepath, i)
             if os.path.isfile(full_path):
                 with open(full_path, "r") as file:
-                        self.contents[i] = file.read()
+                    self.contents[i] = file.read()
 
     def get_content(self, i):
         content = self.contents.get(f"{i}.txt")
@@ -110,11 +113,10 @@ class EBookReader:
         # Update screen
         epd.display(epd.getbuffer(ScreenImage))
         sleep_epd(epd)
-        return ScreenImage
 
     def show_previous_screen(self, epd):
         self.extra_lines = []
         self.index = self.old_index - 1
         if self.index <= 0:
             self.index = 1
-        return self.show_next_screen(epd)
+        self.show_next_screen(epd)
