@@ -77,9 +77,9 @@ class EBookReader:
                     # print(line)
                     screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
                     y_cursor += self.FONT_SIZE
+            y_cursor += self.PARAGRAPH_SPACE
 
         while y_cursor <= text_height - self.FONT_SIZE:
-            y_cursor += self.PARAGRAPH_SPACE
             content = self.get_content(self.index)
             lines = fit_text_within_screen(text=content,
                                            font=self.FONT,
@@ -95,6 +95,7 @@ class EBookReader:
                     # print(line)
                     screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
                     y_cursor += self.FONT_SIZE
+            y_cursor += self.PARAGRAPH_SPACE
             self.index += 1
 
         save_index(self.filepath, self.old_index)
