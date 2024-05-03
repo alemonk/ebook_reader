@@ -20,13 +20,14 @@ class EBookReader:
         self.font_small = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE-5)
         self.index = 0
         self.old_index = 0
-        self.extra_lines = ""
         self.filepath = ""
         self.book = ""
         self.width = 0
         self.height = 0
         self.contents = {}
         self.epd = epd
+        self.extra_lines = []
+        self.last_switch_state = 0
 
     def store_content(self):
         for i in os.listdir(self.filepath):
@@ -53,7 +54,7 @@ class EBookReader:
         draw.text((left, top), text, font=self.font_small, fill=0)
         self.epd.display_Partial(self.epd.getbuffer(ScreenImage), 0, 0, self.width, self.height)
 
-    def show_next_screen(self, epd, overflow_lines=""):
+    def show_next_screen(self, epd):
         self.old_index = self.index
         x_cursor = self.MARGINS
         y_cursor = self.MARGINS
@@ -62,12 +63,13 @@ class EBookReader:
         ScreenImage = Image.new("1", (self.width, self.height), 255)
         screen_buffer = ImageDraw.Draw(ScreenImage)
         text_height = self.height - 2 * self.MARGINS - self.FONT_SIZE
-        extra_lines = []
+        overflow_lines = self.extra_lines
+        self.extra_lines = []
 
         if overflow_lines:
             for _, line in enumerate(overflow_lines):
                 if y_cursor > text_height - self.FONT_SIZE:
-                    extra_lines.append(line)
+                    self.extra_lines.append(line)
                 else:
                     # print(line)
                     screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
@@ -85,7 +87,7 @@ class EBookReader:
                                            fast_mode=self.FAST_MODE)
             for _, line in enumerate(lines):
                 if y_cursor > text_height - self.FONT_SIZE:
-                    extra_lines.append(line)
+                    self.extra_lines.append(line)
                 else:
                     # print(line)
                     screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
@@ -101,15 +103,17 @@ class EBookReader:
             progress = f"Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} % - {get_closest_heading(index=self.index, filepath=self.filepath)}"
             progress_width = self.width * self.old_index / n_files
             screen_buffer.line((0,self.height-self.FONT_SIZE-round(self.MARGINS), self.width, self.height-self.FONT_SIZE-round(self.MARGINS)),fill=0)
+            screen_buffer.line((0,self.height-1, self.width, self.height-1),fill=0)
             screen_buffer.rectangle((0, self.height-4, progress_width, self.height), fill=0)
             screen_buffer.text((round(self.MARGINS), self.height-self.FONT_SIZE-round(self.MARGINS)), progress, font=self.font_small, fill=0)
 
         # Update screen
         epd.display(epd.getbuffer(ScreenImage))
         sleep_epd(epd)
-        return extra_lines, ScreenImage
+        return ScreenImage
 
     def show_previous_screen(self, epd):
+        self.extra_lines = []
         self.index = self.old_index - 1
         if self.index <= 0:
             self.index = 1

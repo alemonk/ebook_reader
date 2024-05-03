@@ -153,7 +153,7 @@ def get_closest_heading(index, filepath):
         headings = json.load(f)
 
     headings = {int(k): v for k, v in headings.items()}
-    possible_headings = [i for i in headings if i > index]
+    possible_headings = [i for i in headings if i >= index]
 
     if not possible_headings:
         return "Last Chapter"
