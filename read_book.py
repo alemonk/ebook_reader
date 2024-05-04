@@ -24,7 +24,8 @@ if __name__ == "__main__":
         reader.old_index = 0
 
         # Setup button
-        switch = Button(reader.SWITCH_GPIO, pull_up=False)
+        switch = Button(reader.SWITCH_GPIO)
+        reader.set_last_switch_state(get_switch_state(switch))
 
         # Open book
         reader.store_content()

@@ -27,7 +27,10 @@ class EBookReader:
         self.contents = {}
         self.epd = epd
         self.extra_lines = []
-        self.last_switch_state = 0
+        self.last_switch_state = False
+
+    def set_last_switch_state(self, state):
+        self.last_switch_state = state
 
     def store_content(self):
         for i in os.listdir(self.filepath):

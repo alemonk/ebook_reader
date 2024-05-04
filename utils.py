@@ -185,6 +185,10 @@ def handle_switch(reader, epd, switch):
     time.sleep(0.25)
 
 
+def get_switch_state(switch):
+    return switch.is_pressed
+
+
 # class ContentFormatter:
 #     def __init__(self):
 #         self.last_class_type = None
