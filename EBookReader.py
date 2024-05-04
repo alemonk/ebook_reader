@@ -28,9 +28,6 @@ class EBookReader:
         self.epd = epd
         self.extra_lines = []
         self.last_switch_state = 0
-    
-    def set_initial_switch_state(self):
-        get_switch_state(self.SWITCH_GPIO)
 
     def store_content(self):
         for i in os.listdir(self.filepath):

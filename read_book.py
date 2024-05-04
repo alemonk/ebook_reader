@@ -1,6 +1,6 @@
 import logging
 from waveshare_lib import epd7in5_V2
-import RPi.GPIO as GPIO
+from gpiozero import Button
 from utils import *
 from EBookReader import EBookReader
 
@@ -24,16 +24,14 @@ if __name__ == "__main__":
         reader.old_index = 0
 
         # Setup button
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(reader.SWITCH_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        reader.set_initial_switch_state()
+        switch = Button(reader.SWITCH_GPIO, pull_up=False)
 
         # Open book
         reader.store_content()
-        # ScreenImage = reader.show_next_screen(epd)
+        ScreenImage = reader.show_next_screen(epd)
 
         while True:
-            handle_switch(reader, epd)
+            handle_switch(reader, epd, switch)
 
     except Exception as e:
         logging.info(e)
@@ -42,6 +40,6 @@ if __name__ == "__main__":
         logging.info("ctrl + c:")
         print("GPIO cleanup")
         print("epd cleanup")
-        GPIO.cleanup()
+        reader.switch.close()
         epd7in5_V2.epdconfig.module_exit(cleanup=True)
         exit()

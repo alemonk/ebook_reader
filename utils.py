@@ -11,7 +11,6 @@ import time
 import textwrap
 import tempfile
 import shutil
-import RPi.GPIO as GPIO
 
 def print_highlight(text):
     print("\n")
@@ -166,14 +165,14 @@ def get_closest_heading(index, filepath):
     return f"{left_paragraphs} until {next_paragraph}"
 
 
-def handle_switch(reader, epd):
-    switch_state = get_switch_state(reader.SWITCH_GPIO)
+def handle_switch(reader, epd, switch):
+    switch_state = switch.is_pressed
     double_switch_event = False
 
     if switch_state != reader.last_switch_state:
         t = time.time()
         while time.time() - t < 0.8:
-            if get_switch_state(reader.SWITCH_GPIO) != switch_state:
+            if switch.is_pressed != switch_state:
                 double_switch_event = True
         if double_switch_event:
             print_highlight("Previous page")
@@ -182,11 +181,9 @@ def handle_switch(reader, epd):
             print_highlight("Next page")
             reader.show_next_screen(epd)
 
-    reader.last_switch_state = get_switch_state(reader.SWITCH_GPIO)
+    reader.last_switch_state = switch.is_pressed
     time.sleep(0.25)
 
-def get_switch_state(gpio):
-    return GPIO.input(gpio)
 
 # class ContentFormatter:
 #     def __init__(self):
