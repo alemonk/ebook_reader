@@ -21,16 +21,16 @@ def print_highlight(text):
 
 
 def get_book_name():
-	parser = argparse.ArgumentParser(description="Read a book.")
-	parser.add_argument("-b", "--book",
+    parser = argparse.ArgumentParser(description="Read a book.")
+    parser.add_argument("-b", "--book",
                     type=str,
                     help="The name of the book to read")
 
-	args = parser.parse_args()
-	if args.book:
-		return args.book
-	print("Opening default book: 1984")
-	return "1984"
+    args = parser.parse_args()
+    if args.book:
+        return args.book
+    print("Opening default book: 1984")
+    return "1984"
 
 
 def clear_epd(epd):
@@ -165,24 +165,25 @@ def get_closest_heading(index, filepath):
 
     return f"{left_paragraphs} until {next_paragraph}"
 
+
 def handle_switch(reader, epd):
-	switch_state = get_switch_state(reader.SWITCH_GPIO)
-	double_switch_event = False
+    switch_state = get_switch_state(reader.SWITCH_GPIO)
+    double_switch_event = False
 
-	if switch_state != reader.last_switch_state:
-		t = time.time()
-		while time.time() - t < 0.8:
-			if get_switch_state(reader.SWITCH_GPIO) != switch_state:
-				double_switch_event = True
-		if double_switch_event:
-			print_highlight("Previous page")
-			reader.show_previous_screen(epd)
-		else:
-			print_highlight("Next page")
-			reader.show_next_screen(epd)
+    if switch_state != reader.last_switch_state:
+        t = time.time()
+        while time.time() - t < 0.8:
+            if get_switch_state(reader.SWITCH_GPIO) != switch_state:
+                double_switch_event = True
+        if double_switch_event:
+            print_highlight("Previous page")
+            reader.show_previous_screen(epd)
+        else:
+            print_highlight("Next page")
+            reader.show_next_screen(epd)
 
-	reader.last_switch_state = get_switch_state(reader.SWITCH_GPIO)
-	time.sleep(0.25)
+    reader.last_switch_state = get_switch_state(reader.SWITCH_GPIO)
+    time.sleep(0.25)
 
 def get_switch_state(gpio):
     return GPIO.input(gpio)
