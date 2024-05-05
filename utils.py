@@ -171,6 +171,7 @@ def handle_switch(reader, epd, switch):
 
     if switch_state != reader.last_switch_state:
         t = time.time()
+        reader.last_switch_toggle_time = t
         while time.time() - t < 0.8:
             if switch.is_pressed != switch_state:
                 double_switch_event = True
@@ -182,7 +183,6 @@ def handle_switch(reader, epd, switch):
             reader.show_next_screen(epd)
 
     reader.last_switch_state = switch.is_pressed
-    time.sleep(0.25)
 
 
 def get_switch_state(switch):

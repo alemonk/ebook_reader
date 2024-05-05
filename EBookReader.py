@@ -1,6 +1,7 @@
 import os
 from PIL import Image,ImageDraw,ImageFont
 from utils import *
+import time
 
 class EBookReader:
     def __init__(self, epd):
@@ -28,6 +29,7 @@ class EBookReader:
         self.epd = epd
         self.extra_lines = []
         self.last_switch_state = False
+        self.last_switch_toggle_time = time.time()
 
     def set_last_switch_state(self, state):
         self.last_switch_state = state
