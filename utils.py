@@ -120,31 +120,31 @@ def save_index(filepath, old_index):
         shutil.move(temp_file.name, index_file)  # Replace the old file with the new file
 
 
-def error_screen(err):
-    # Parameters
-    FONT_SIZE = 25
-    FONT = ImageFont.truetype(os.path.join(picdir, "arial.ttf"), FONT_SIZE)
-
+def print_on_epd(epd, reader, message):
     # Setup epaper display
     logging.info("init and Clear")
-    epd = epd7in5_V2.EPD()
-    width = epd.width
-    height = epd.height
+    message = message.split("\n")
 
     epd.init()
-    ScreenImage = Image.new("1", (width, height), 255)
+    ScreenImage = Image.new("1", (reader.width, reader.height), 255)
     screen_buffer = ImageDraw.Draw(ScreenImage)
-    screen_buffer.text((0,FONT_SIZE*0), f"Error: {err}", font=FONT, fill=0)
-    screen_buffer.text((0,FONT_SIZE*2), "Please refer to GitHub for more info.", font=FONT, fill=0)
-    screen_buffer.text((0,FONT_SIZE*3), "(or ask Alessandro)", font=FONT, fill=0)
+    x_cursor = 10
+    y_cursor = 10
+    
+    lines = []
+    wrapper_width = reader.width / average_font_width(reader.FONT)
+    for paragraph in message:
+        wrapped_paragraph = textwrap.wrap(paragraph, width=wrapper_width)
+        lines.extend(wrapped_paragraph)
+    
+    for _, line in enumerate(lines):
+        # print(line)
+        screen_buffer.text((x_cursor,y_cursor), line, font=reader.FONT, fill=0)
+        y_cursor += reader.FONT_SIZE + reader.PARAGRAPH_SPACE
 
     # Update screen
     epd.display(epd.getbuffer(ScreenImage))
     sleep_epd(epd)
-
-    while True:
-        print("Sleep...")
-        time.sleep(1984)
 
 
 def get_closest_heading(index, filepath):
