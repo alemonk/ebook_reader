@@ -4,10 +4,10 @@
 BOOK="1984"
 FILEPATH="parsed_epubs/${BOOK}"
 
-git fetch origin
-git reset --hard origin/main
+#git fetch origin
+#git reset --hard origin/main
 
-source pyenv/bin/activate
+#source pyenv/bin/activate
 if [ ! -d "$FILEPATH" ]; then
 	echo "Parsing $BOOK..."
 	python3 epub_parser.py --book $BOOK

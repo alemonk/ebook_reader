@@ -96,7 +96,7 @@ class EBookReader:
                 else:
                     # print(line)
                     screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
-                    y_cursor += self.FONT_SIZE
+                    y_cursor += self.FONT_SIZE + self.PARAGRAPH_SPACE
             y_cursor += self.PARAGRAPH_SPACE + self.PARAGRAPH_SPACE
             self.index += 1
 
