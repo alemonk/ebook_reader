@@ -37,6 +37,8 @@ After following these steps, the eBook reader application will start automatical
 
 ## Troubleshooting
 
+Epaper display manual: https://www.waveshare.com/wiki/7.5inch_e-Paper_HAT_Manual#Working_With_Raspberry_Pi .
+
 If you encounter issues where the Raspberry Pi doesn’t execute the program on reboot, it’s important to check the `/etc/rc.local` file. The file should look like this:
 
 ```bash
