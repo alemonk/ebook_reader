@@ -4,7 +4,6 @@ from gpiozero import Button
 from utils import *
 from EBookReader import EBookReader
 import time
-#from quotes_library import get_quotes
 
 def setup_epaper_display():
     logging.info("init and Clear")
@@ -22,6 +21,8 @@ if __name__ == "__main__":
         reader = EBookReader(epd)
         reader.width = epd.height if reader.VERTICAL else epd.width
         reader.height = epd.width if reader.VERTICAL else epd.height
+        if reader.SCREENSAVER_QUOTES:
+            from quotes_library import get_quotes
 
         # Variables
         book = get_book_name()
@@ -39,13 +40,13 @@ if __name__ == "__main__":
 
         while True:
             handle_switch(reader, epd, switch)
-            if time.time() - reader.last_switch_toggle_time > 60*60:
+            if (time.time() - reader.last_switch_toggle_time > 60*60) and reader.SCREENSAVER_QUOTES:
                 reader.index = reader.old_index
                 reader.extra_lines = []
                 clear_epd(epd)
-                #quote = get_quotes(random=True)
-                #message = f"{quote['data'][0]['quote']} \n - {quote['data'][0]['author']}"
-                #print_on_epd(epd=epd, reader=reader, message=message)
+                quote = get_quotes(random=True)
+                message = f"{quote['data'][0]['quote']} \n - {quote['data'][0]['author']}"
+                print_on_epd(epd=epd, reader=reader, message=message)
                 if get_switch_state(switch):
                     switch.wait_for_inactive()
                 else:

@@ -13,6 +13,7 @@ class EBookReader:
         self.FONT_SIZE = 25
         self.PARAGRAPH_SPACE = 5
         self.SWITCH_GPIO = 26
+        self.SCREENSAVER_QUOTES = False
 
         self.picdir = os.path.join("waveshare_lib/pic")
         self.FONT = ImageFont.truetype(os.path.join(self.picdir, "arial.ttf"), self.FONT_SIZE)
