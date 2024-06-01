@@ -11,6 +11,29 @@ def setup_epaper_display():
     clear_epd(epd)
     return epd
 
+def handle_switch(reader, epd, switch):
+    switch_state = switch.is_pressed
+    double_switch_event = False
+
+    if switch_state != reader.last_switch_state:
+        t = time.time()
+        reader.last_switch_toggle_time = t
+        while time.time() - t < 0.8:
+            if switch.is_pressed != switch_state:
+                double_switch_event = True
+        if double_switch_event:
+            print_highlight("Previous page")
+            reader.load_previous_screen()
+            reader.update_screen(epd)
+            reader.load_next_screen()
+            
+        else:
+            print_highlight("Next page")
+            reader.update_screen(epd)
+            reader.load_next_screen()
+
+    reader.last_switch_state = switch.is_pressed
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     try:
@@ -36,27 +59,32 @@ if __name__ == "__main__":
 
         # Open book
         reader.store_content()
-        ScreenImage = reader.show_next_screen(epd)
+        reader.load_next_screen()
+        reader.update_screen(epd)
+        reader.load_next_screen()
 
         while True:
             handle_switch(reader, epd, switch)
-            if (time.time() - reader.last_switch_toggle_time > 60*60) and reader.SCREENSAVER_QUOTES:
-                reader.index = reader.old_index
-                reader.extra_lines = []
-                clear_epd(epd)
-                quote = get_quotes(random=True)
-                message = f"{quote['data'][0]['quote']} \n - {quote['data'][0]['author']}"
-                print_on_epd(epd=epd, reader=reader, message=message)
-                if get_switch_state(switch):
-                    switch.wait_for_inactive()
-                else:
-                    switch.wait_for_active()
-                reader.last_switch_toggle_time = time.time()
+            
+            if (time.time() - reader.last_switch_toggle_time > 60*60):
+                if reader.SCREENSAVER_QUOTES:
+                    reader.index = reader.old_index
+                    reader.extra_lines = []
+                    clear_epd(epd)
+                    quote = get_quotes(random=True)
+                    message = f"{quote['data'][0]['quote']} \n - {quote['data'][0]['author']}"
+                    print_on_epd(epd=epd, reader=reader, message=message)
+                    if get_switch_state(switch):
+                        switch.wait_for_inactive()
+                    else:
+                        switch.wait_for_active()
+                    reader.last_switch_toggle_time = time.time()
+                
             time.sleep(0.25)
 
-    except Exception as e:
-        logging.info(e)
-        print_on_epd(epd, reader, e)
+    # except Exception as e:
+    #     logging.info(e)
+    #     print_on_epd(epd, reader, str(e))
     except KeyboardInterrupt:
         logging.info("ctrl + c:")
         print_highlight("GPIO and epd cleanup")

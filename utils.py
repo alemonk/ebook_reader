@@ -41,7 +41,6 @@ def clear_epd(epd):
 def sleep_epd(epd):
 	logging.info("Goto Sleep...")
 	epd.sleep()
-	print("Ready")
 
 
 def average_font_width(font):
@@ -163,26 +162,6 @@ def get_closest_heading(index, filepath):
     next_paragraph = headings[closest_heading_index]["text"]
 
     return f"{left_paragraphs} until {next_paragraph}"
-
-
-def handle_switch(reader, epd, switch):
-    switch_state = switch.is_pressed
-    double_switch_event = False
-
-    if switch_state != reader.last_switch_state:
-        t = time.time()
-        reader.last_switch_toggle_time = t
-        while time.time() - t < 0.8:
-            if switch.is_pressed != switch_state:
-                double_switch_event = True
-        if double_switch_event:
-            print_highlight("Previous page")
-            reader.show_previous_screen(epd)
-        else:
-            print_highlight("Next page")
-            reader.show_next_screen(epd)
-
-    reader.last_switch_state = switch.is_pressed
 
 
 def get_switch_state(switch):

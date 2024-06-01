@@ -33,8 +33,8 @@ import sys
 import time
 import subprocess
 
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
-
 
 class RaspberryPi:
     # Pin definition
