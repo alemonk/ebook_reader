@@ -1,6 +1,22 @@
-# eBook Reader for Raspberry Pi
+# Raspberry Pi E-Paper eBook Reader
 
-This repository contains the code for an eBook reader designed to run on a Raspberry Pi. The application is set up to start automatically whenever the Raspberry Pi is powered on.
+## Overview
+This project transforms a Raspberry Pi into a dedicated eBook reader using an e-paper display, providing a low-power, paper-like reading experience. It features a custom-built application that parses eBooks into a format suitable for the e-paper display and allows for easy navigation through the book's content.
+
+## Features
+- **E-Paper Display Compatibility**: Designed to work seamlessly with e-paper displays, offering excellent readability even in bright sunlight.
+- **Automated Book Parsing**: Includes a script to automatically parse ePub files into text files, organizing the content by paragraphs for optimized display.
+- **Efficient Navigation**: Utilizes physical buttons for page navigation, with support for both single and double press actions to move between pages.
+- **Pre-Rendering Pages**: Enhances performance by pre-rendering all pages of the book, storing them as individual text files for quick access and display.
+- **Screensaver Functionality**: Features a screensaver mode that displays random literary quotes when the reader is idle, enriching the user experience.
+- **Network Management**: The system intelligently manages network connectivity, disabling it during reading to save power and re-enabling it as needed.
+- **Robust Error Handling**: Implements error handling to ensure stability and provides informative logging for troubleshooting.
+
+## How It Works
+1. **Initialization**: On startup, the Raspberry Pi fetches the latest code from the repository and ensures that the WiFi is active.
+2. **Book Selection**: Users can select the book they wish to read by specifying the title in the provided script.
+3. **Parsing**: The included ePub parser converts the selected book into a series of text files, each representing a screen's worth of content.
+4. **Reading**: The main application (`read_book.py`) handles the display of the book's content on the e-paper screen, responding to button presses to navigate through the book.
 
 ## Installation and Setup
 
