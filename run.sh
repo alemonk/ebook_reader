@@ -9,9 +9,6 @@ git fetch origin
 git reset --hard origin/main
 # source pyenv/bin/activate
 
-# Make sure wifi is active
-sudo rfkill unblock wifi
-
 # Parse selected book
 if [ ! -d "$FILEPATH" ]; then
 	echo "Parsing $BOOK..."

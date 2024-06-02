@@ -149,10 +149,10 @@ def get_closest_heading(index, filepath):
         return 'Last Chapter'
 
     closest_heading_index = min(possible_headings)
-    left_paragraphs = closest_heading_index - index
+    paragraphs_left = closest_heading_index - index
     next_paragraph = headings[closest_heading_index]['text']
 
-    return f'{left_paragraphs} until {next_paragraph}'
+    return paragraphs_left, next_paragraph
 
 def get_switch_state(switch):
     return switch.is_pressed

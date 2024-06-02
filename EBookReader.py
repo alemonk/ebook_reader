@@ -104,11 +104,16 @@ class EBookReader:
             y_cursor += self.PARAGRAPH_SPACE + self.PARAGRAPH_SPACE
             self.index += 1
 
+            paragraphs_left, _ = get_closest_heading(index=self.index, filepath=self.filepath)
+            if paragraphs_left == 0:
+                y_cursor = self.height
+
         if self.PROGRESS_BAR:
-            # Progress bar
+            paragraphs_left, next_paragraph = get_closest_heading(index=self.index, filepath=self.filepath)
+            
             lst = os.listdir(self.filepath)
             n_files = len(lst) - 1
-            progress = f'Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} % - {get_closest_heading(index=self.index, filepath=self.filepath)}'
+            progress = f'Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} % - {paragraphs_left} until {next_paragraph}'
             progress_width = self.width * self.old_index / n_files
             self.screen_buffer.line((0,self.height-self.FONT_SIZE-round(self.MARGINS), self.width, self.height-self.FONT_SIZE-round(self.MARGINS)),fill=0)
             self.screen_buffer.line((0,self.height-1, self.width, self.height-1),fill=0)
