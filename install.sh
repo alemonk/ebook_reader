@@ -4,6 +4,7 @@
 # sudo apt upgrade
 
 sudo apt install python3-pip
+sudo apt-get install rfkill
 # sudo apt-get install python3-venv
 # python3 -m venv pyenv
 # source pyenv/bin/activate
