@@ -74,8 +74,10 @@ class EBookReader:
         text_height = self.height - 2 * self.MARGINS - self.FONT_SIZE
         overflow_lines = self.extra_lines
         self.extra_lines = []
+        paragraph_counter = 0
 
         if overflow_lines:
+            paragraph_counter = paragraph_counter + 1
             for _, line in enumerate(overflow_lines):
                 if y_cursor > text_height - self.FONT_SIZE:
                     self.extra_lines.append(line)
@@ -87,33 +89,37 @@ class EBookReader:
 
         while y_cursor <= text_height - self.FONT_SIZE:
             content = self.get_content(self.index)
-            lines = fit_text_within_screen(text=content,
-                                           font=self.FONT,
-                                           margins=self.MARGINS,
-                                           width=self.width,
-                                           font_size=self.FONT_SIZE,
-                                           filepath=self.filepath,
-                                           fast_mode=self.FAST_MODE)
-            for _, line in enumerate(lines):
-                if y_cursor > text_height - self.FONT_SIZE:
-                    self.extra_lines.append(line)
-                else:
-                    # print(line)
-                    self.screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
-                    y_cursor += self.FONT_SIZE + self.PARAGRAPH_SPACE
-            y_cursor += self.PARAGRAPH_SPACE + self.PARAGRAPH_SPACE
-            self.index += 1
 
-            paragraphs_left, _ = get_closest_heading(index=self.index, filepath=self.filepath)
-            if paragraphs_left == 0:
+            # Check if it's next chapter
+            paragraph_counter = paragraph_counter + 1
+            _, next_chapter = get_closest_heading(index=self.index, filepath=self.filepath)
+
+            if content != next_chapter or paragraph_counter == 1:
+                lines = fit_text_within_screen(text=content,
+                                            font=self.FONT,
+                                            margins=self.MARGINS,
+                                            width=self.width,
+                                            font_size=self.FONT_SIZE,
+                                            filepath=self.filepath,
+                                            fast_mode=self.FAST_MODE)
+                for _, line in enumerate(lines):
+                    if y_cursor > text_height - self.FONT_SIZE:
+                        self.extra_lines.append(line)
+                    else:
+                        # print(line)
+                        self.screen_buffer.text((x_cursor,y_cursor), line, font=self.FONT, fill=0)
+                        y_cursor += self.FONT_SIZE + self.PARAGRAPH_SPACE
+                y_cursor += self.PARAGRAPH_SPACE + self.PARAGRAPH_SPACE
+                self.index += 1
+            else:    
                 y_cursor = self.height
 
         if self.PROGRESS_BAR:
-            paragraphs_left, next_paragraph = get_closest_heading(index=self.index, filepath=self.filepath)
-            
+            paragraphs_left, next_chapter = get_closest_heading(index=self.index, filepath=self.filepath)
+
             lst = os.listdir(self.filepath)
             n_files = len(lst) - 1
-            progress = f'Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} % - {paragraphs_left} until {next_paragraph}'
+            progress = f'Page {self.old_index}/{n_files} - {str(round(100 * self.old_index/n_files, 2))} % - {paragraphs_left} until {next_chapter}'
             progress_width = self.width * self.old_index / n_files
             self.screen_buffer.line((0,self.height-self.FONT_SIZE-round(self.MARGINS), self.width, self.height-self.FONT_SIZE-round(self.MARGINS)),fill=0)
             self.screen_buffer.line((0,self.height-1, self.width, self.height-1),fill=0)
