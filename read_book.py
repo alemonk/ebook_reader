@@ -26,7 +26,6 @@ def handle_switch(reader, epd, switch):
             reader.load_previous_screen()
             reader.update_screen(epd)
             reader.load_next_screen()
-            
         else:
             print_highlight('Next page')
             reader.update_screen(epd)
@@ -81,7 +80,7 @@ if __name__ == '__main__':
         while True:
             handle_switch(reader, epd, switch)
 
-            if time.time() - reader.last_switch_toggle_time > 60*60:
+            if time.time() - reader.last_switch_toggle_time > 60 * 60:
                 if not network_disabled:
                     disable_network()
                     network_disabled = True

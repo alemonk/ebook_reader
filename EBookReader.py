@@ -115,7 +115,7 @@ class EBookReader:
             self.screen_buffer.rectangle((0, self.height-4, progress_width, self.height), fill=0)
             self.screen_buffer.text((round(self.MARGINS), self.height-self.FONT_SIZE-round(self.MARGINS)), progress, font=self.font_small, fill=0)
 
-        save_index(self.filepath, self.old_index)
+        save_index(self.filepath, self.old_page_index)
         print('Page loaded!')
 
     def update_screen(self, epd):

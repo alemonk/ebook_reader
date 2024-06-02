@@ -95,7 +95,7 @@ def load_index(filepath):
     else:
         return 1  # Default index
 
-def save_index(filepath, old_index):
+def save_index(filepath, index):
     meta_dir = os.path.join(filepath, 'meta')
     os.makedirs(meta_dir, exist_ok=True)  # Create the directory if it does not exist
     index_file = os.path.join(meta_dir, 'index.txt')
@@ -103,7 +103,7 @@ def save_index(filepath, old_index):
 
     try:
         with open(temp_file.name, 'w') as file:
-            json.dump(old_index, file)
+            json.dump(index, file)
             file.flush()  # Flush the buffer
             os.fsync(file.fileno())  # Force write to disk
     except Exception as e:
@@ -121,13 +121,13 @@ def print_on_epd(epd, reader, message):
     screen_buffer = ImageDraw.Draw(ScreenImage)
     x_cursor = 10
     y_cursor = 10
-    
+
     lines = []
     wrapper_width = reader.width / average_font_width(reader.FONT)
     for paragraph in message:
         wrapped_paragraph = textwrap.wrap(paragraph, width=wrapper_width)
         lines.extend(wrapped_paragraph)
-    
+
     for _, line in enumerate(lines):
         # print(line)
         screen_buffer.text((x_cursor,y_cursor), line, font=reader.FONT, fill=0)
@@ -164,7 +164,7 @@ def disable_network():
 
 def enable_network():
     os.system('sudo rfkill unblock wifi')
-    os.system('sudo rfkill unblock bluetooth')
+    # os.system('sudo rfkill unblock bluetooth')
     logging.info('WiFi and Bluetooth enabled due to activity')
 
 # class ContentFormatter:
